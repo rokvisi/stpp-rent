@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { resources } from '$lib/static/test.json';
 	import { page } from '$app/stores';
 	import { JsonView } from '@zerodevx/svelte-json-view';
 
-	export let data;
-	$: resource = data;
+	$: resource = resources.find((r) => r.resource === $page.params.resource)!;
 </script>
 
 <div class="flex flex-col gap-4">
@@ -65,9 +65,10 @@
 	</section>
 	<section>
 		<h2 class="text-4xl pb-6">Example Request</h2>
-		<code class="text-red-500 bg-zinc-800 p-2 rounded"
-			>{resource.method} {$page.url.origin}/{resource.sample_request}</code
-		>
+		<p class="text-red-500 bg-zinc-800 p-2 rounded font-mono">
+			{resource.method}
+			{$page.url.origin}/{resource.sample_request}
+		</p>
 	</section>
 	<section>
 		<h2 class="text-4xl pb-6">Example Response</h2>
