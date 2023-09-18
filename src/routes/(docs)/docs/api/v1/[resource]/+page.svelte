@@ -8,14 +8,14 @@
 
 <div class="flex flex-col gap-4">
 	<section>
-		<h1 class="text-5xl pb-4">{resource.method} {resource.resource}</h1>
+		<h1 class="pb-4 text-5xl">{resource.method} {resource.resource}</h1>
 		<p>{resource.description}</p>
 	</section>
 	<section>
-		<h2 class="text-4xl pb-6">Resource URL</h2>
+		<h2 class="pb-6 text-4xl">Resource URL</h2>
 		{#if resource.method === 'GET'}
 			<a
-				class="text-red-500 font-mono underline underline-offset-4"
+				class="font-mono text-red-500 underline underline-offset-4"
 				href="{$page.url.origin}/{resource.resource_url}"
 				>{$page.url.origin}/{resource.resource_url}</a
 			>
@@ -24,20 +24,20 @@
 		{/if}
 	</section>
 	<section>
-		<h2 class="text-4xl pb-6">Resource Information</h2>
-		<table class="rounded overflow-hidden">
-			<tr class="bg-zinc-800 border-b">
-				<td class="p-2 border-r">Response formats</td>
+		<h2 class="pb-6 text-4xl">Resource Information</h2>
+		<table class="overflow-hidden rounded">
+			<tr class="border-b bg-zinc-800">
+				<td class="border-r p-2">Response formats</td>
 				<td class="p-2">{resource.information.response_format}</td>
 			</tr>
 			<tr class="bg-zinc-700">
-				<td class="p-2 border-r">Requires authentication? </td>
+				<td class="border-r p-2">Requires authentication? </td>
 				<td class="p-2">{resource.information.requires_auth ? 'Yes' : 'No'}</td>
 			</tr>
 		</table>
 	</section>
 	<section>
-		<h2 class="text-4xl pb-6">Parameters</h2>
+		<h2 class="pb-6 text-4xl">Parameters</h2>
 		{#if resource.parameters.length === 0}
 			<p>-</p>
 		{:else}
@@ -45,8 +45,8 @@
 		{/if}
 	</section>
 	<section>
-		<h2 class="text-4xl pb-6">Response codes</h2>
-		<table class="rounded overflow-hidden">
+		<h2 class="pb-6 text-4xl">Response codes</h2>
+		<table class="overflow-hidden rounded">
 			<thead>
 				<tr class="border-b bg-zinc-800">
 					<th class="border-r p-2">Code</th>
@@ -56,7 +56,7 @@
 			<tbody>
 				{#each resource.responses as response}
 					<tr class="odd:bg-zinc-700 even:bg-zinc-800">
-						<td class="p-2 border-r">{response.code}</td>
+						<td class="border-r p-2">{response.code}</td>
 						<td class="p-2">{response.reason}</td>
 					</tr>
 				{/each}
@@ -64,15 +64,15 @@
 		</table>
 	</section>
 	<section>
-		<h2 class="text-4xl pb-6">Example Request</h2>
-		<p class="text-red-500 bg-zinc-800 p-2 rounded font-mono">
+		<h2 class="pb-6 text-4xl">Example Request</h2>
+		<p class="rounded bg-zinc-800 p-2 font-mono text-red-500">
 			{resource.method}
 			{$page.url.origin}/{resource.sample_request}
 		</p>
 	</section>
 	<section>
-		<h2 class="text-4xl pb-6">Example Response</h2>
-		<div class="bg-zinc-700 rounded p-2 font-mono json-wrapper">
+		<h2 class="pb-6 text-4xl">Example Response</h2>
+		<div class="json-wrapper rounded bg-zinc-700 p-2 font-mono">
 			<JsonView json={resource.sample_response} />
 		</div>
 	</section>

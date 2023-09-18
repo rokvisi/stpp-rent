@@ -1,1 +1,1 @@
-<h1 class="text-5xl pb-4">Home page</h1>
+<h1 class="pb-4 text-5xl">Home page</h1>

@@ -19,6 +19,6 @@
 
 <style lang="postcss">
 	:global(html) {
-		@apply bg-zinc-900 text-stone-300 font-overpass;
+		@apply bg-zinc-900 font-overpass text-stone-300;
 	}
 </style>
