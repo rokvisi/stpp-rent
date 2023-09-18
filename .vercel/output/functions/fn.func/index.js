@@ -80,8 +80,8 @@ function subscribe(store, ...callbacks) {
   const unsub = store.subscribe(...callbacks);
   return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
-function set_current_component(component8) {
-  current_component = component8;
+function set_current_component(component7) {
+  current_component = component7;
 }
 function get_current_component() {
   if (!current_component)
@@ -120,15 +120,15 @@ function each(items, fn) {
   }
   return str;
 }
-function validate_component(component8, name2) {
-  if (!component8 || !component8.$$render) {
+function validate_component(component7, name2) {
+  if (!component7 || !component7.$$render) {
     if (name2 === "svelte:component")
       name2 += " this={...}";
     throw new Error(
       `<${name2}> is not a valid SSR component. You may need to review your build config to ensure that dependencies are compiled, rather than imported as pre-compiled modules. Otherwise you may need to fix a <${name2}>.`
     );
   }
-  return component8;
+  return component7;
 }
 function create_ssr_component(fn) {
   function $$render(result, props, bindings, slots, context) {
@@ -636,8 +636,8 @@ var init__ = __esm({
   ".svelte-kit/output/server/nodes/0.js"() {
     index = 0;
     component = async () => component_cache ?? (component_cache = (await Promise.resolve().then(() => (init_layout_svelte(), layout_svelte_exports))).default);
-    imports = ["_app/immutable/nodes/0.a38043b3.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/each.c0e137c1.js"];
-    stylesheets = ["_app/immutable/assets/0.4a268e97.css"];
+    imports = ["_app/immutable/nodes/0.18ea4a85.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/each.c0e137c1.js"];
+    stylesheets = ["_app/immutable/assets/0.f1973a79.css"];
     fonts = [];
   }
 });
@@ -704,9 +704,20 @@ var init__2 = __esm({
   ".svelte-kit/output/server/nodes/1.js"() {
     index2 = 1;
     component2 = async () => component_cache2 ?? (component_cache2 = (await Promise.resolve().then(() => (init_error_svelte(), error_svelte_exports))).default);
-    imports2 = ["_app/immutable/nodes/1.c0065872.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/stores.ebec66b3.js", "_app/immutable/chunks/singletons.01cf5024.js"];
+    imports2 = ["_app/immutable/nodes/1.5dda7aa8.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/stores.4267bdef.js", "_app/immutable/chunks/singletons.c3d64619.js"];
     stylesheets2 = [];
     fonts2 = [];
+  }
+});
+
+// .svelte-kit/output/server/chunks/Footer.js
+var Footer;
+var init_Footer = __esm({
+  ".svelte-kit/output/server/chunks/Footer.js"() {
+    init_ssr();
+    Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+      return `<footer class="bg-zinc-800 flex items-center justify-between px-12 py-4 shadow" data-svelte-h="svelte-28y4vu"><div><p>T120B165 Saityno taikom\u0173j\u0173 program\u0173 projektavimas</p> <p>D\u0117stytojas: Tomas Bla\u017Eauskas</p></div> <p>Rokas Vi\u0161inskas - IFF-0/1</p></footer>`;
+    });
   }
 });
 
@@ -719,8 +730,9 @@ var Layout2;
 var init_layout_svelte2 = __esm({
   ".svelte-kit/output/server/entries/pages/(app)/_layout.svelte.js"() {
     init_ssr();
+    init_Footer();
     Layout2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<header data-svelte-h="svelte-1skmrlm"><h1>(app)layout navigation</h1> <nav><ul><li><a href="/">Home</a></li> <li><a href="/docs/api/v1">Docs</a></li></ul></nav></header> <main class="min-h-screen px-40 py-20">${slots.default ? slots.default({}) : ``}</main> <footer data-svelte-h="svelte-8n5cuy"><p>sum bullshit</p></footer>`;
+      return `<div class="relative grid grid-rows-[auto_1fr_auto] min-h-screen"><header class="bg-zinc-800 px-12 flex items-center justify-between shadow py-4" data-svelte-h="svelte-120xihe"><span class="text-lg text-mono uppercase tracking-wider">Rentee</span> <span>TODO Header</span> <nav><a href="/docs/api/v1">Docs</a></nav></header> <div class="grid grid-cols-[auto_1fr]"><main class="pt-20 pb-10 px-12">${slots.default ? slots.default({}) : ``}</main></div> ${validate_component(Footer, "Footer").$$render($$result, {}, {}, {})}</div>`;
     });
   }
 });
@@ -739,7 +751,7 @@ var init__3 = __esm({
   ".svelte-kit/output/server/nodes/2.js"() {
     index3 = 2;
     component3 = async () => component_cache3 ?? (component_cache3 = (await Promise.resolve().then(() => (init_layout_svelte2(), layout_svelte_exports2))).default);
-    imports3 = ["_app/immutable/nodes/2.5639fcb3.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js"];
+    imports3 = ["_app/immutable/nodes/2.4994092f.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/Footer.f164d0a0.js"];
     stylesheets3 = [];
     fonts3 = [];
   }
@@ -815,6 +827,7 @@ var init_layout_svelte3 = __esm({
   ".svelte-kit/output/server/entries/pages/(docs)/docs/_layout.svelte.js"() {
     init_ssr();
     init_stores();
+    init_Footer();
     init_test();
     Layout3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let $page, $$unsubscribe_page;
@@ -823,7 +836,7 @@ var init_layout_svelte3 = __esm({
       return `<div class="relative grid grid-rows-[auto_1fr_auto] min-h-screen"><header class="bg-zinc-800 px-12 flex items-center justify-between shadow py-4" data-svelte-h="svelte-ug33c"><span class="text-lg text-mono uppercase tracking-wider">Rentee</span> <span>API Reference</span> <nav><a href="/">Home</a></nav></header> <div class="grid grid-cols-[auto_1fr]"><aside class="bg-neutral-800 pl-8 pt-20 pr-24 text-neutral-400 border-r border-stone-500"><p class="font-semibold tracking-widest uppercase pb-2" data-svelte-h="svelte-1j2xizo">Resources</p> <ul>${each(resources, (resource) => {
         let pathname = `/docs/api/v1/${resource.resource}`;
         return ` <li class="pb-1"><a class="aria-[current]:font-bold aria-[current]:text-neutral-200"${add_attribute("aria-current", $page.url.pathname === pathname ? "true" : void 0, 0)}${add_attribute("href", pathname, 0)}>${escape(resource.method)} ${escape(resource.resource)}</a> </li>`;
-      })}</ul></aside> <main class="pt-20 pb-10 px-12">${slots.default ? slots.default({}) : ``}</main></div> <footer class="bg-zinc-800 flex items-center justify-between px-12 py-4 shadow" data-svelte-h="svelte-1jj9yxi"><div><p>T120B165 Saityno taikom\u0173j\u0173 program\u0173 projektavimas</p> <p>D\u0117stytojas: Tomas Bla\u017Eauskas</p></div> <p>Rokas Vi\u0161inskas - IFF-0/1</p></footer></div>`;
+      })}</ul></aside> <main class="pt-20 pb-10 px-12">${slots.default ? slots.default({}) : ``}</main></div> ${validate_component(Footer, "Footer").$$render($$result, {}, {}, {})}</div>`;
     });
   }
 });
@@ -842,7 +855,7 @@ var init__4 = __esm({
   ".svelte-kit/output/server/nodes/3.js"() {
     index4 = 3;
     component4 = async () => component_cache4 ?? (component_cache4 = (await Promise.resolve().then(() => (init_layout_svelte3(), layout_svelte_exports3))).default);
-    imports4 = ["_app/immutable/nodes/3.e88ec3fc.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/each.c0e137c1.js", "_app/immutable/chunks/stores.ebec66b3.js", "_app/immutable/chunks/singletons.01cf5024.js", "_app/immutable/chunks/test.e18d91b4.js"];
+    imports4 = ["_app/immutable/nodes/3.e17c7d45.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/each.c0e137c1.js", "_app/immutable/chunks/stores.4267bdef.js", "_app/immutable/chunks/singletons.c3d64619.js", "_app/immutable/chunks/Footer.f164d0a0.js", "_app/immutable/chunks/test.e18d91b4.js"];
     stylesheets4 = [];
     fonts4 = [];
   }
@@ -858,7 +871,7 @@ var init_page_svelte = __esm({
   ".svelte-kit/output/server/entries/pages/(app)/_page.svelte.js"() {
     init_ssr();
     Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<p data-svelte-h="svelte-17q59b6">Home page</p>`;
+      return `<h1 class="text-5xl pb-4" data-svelte-h="svelte-9sdigf">Home page</h1>`;
     });
   }
 });
@@ -877,7 +890,7 @@ var init__5 = __esm({
   ".svelte-kit/output/server/nodes/4.js"() {
     index5 = 4;
     component5 = async () => component_cache5 ?? (component_cache5 = (await Promise.resolve().then(() => (init_page_svelte(), page_svelte_exports))).default);
-    imports5 = ["_app/immutable/nodes/4.e5f7be2f.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js"];
+    imports5 = ["_app/immutable/nodes/4.264e7ce5.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js"];
     stylesheets5 = [];
     fonts5 = [];
   }
@@ -955,62 +968,47 @@ var init__7 = __esm({
   }
 });
 
-// .svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_page.svelte.js
-var page_svelte_exports2 = {};
-__export(page_svelte_exports2, {
-  default: () => Page2
+// .svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_page.ts.js
+var page_ts_exports3 = {};
+__export(page_ts_exports3, {
+  load: () => load3
 });
-var Page2;
-var init_page_svelte2 = __esm({
-  ".svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_page.svelte.js"() {
-    init_ssr();
+function load3() {
+  throw redirect(308, `/docs/api/v1/${resources[0].resource}`);
+}
+var init_page_ts3 = __esm({
+  ".svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_page.ts.js"() {
+    init_chunks();
     init_test();
-    Page2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-      return `<h1 data-svelte-h="svelte-8hix4c">See all available resources</h1> <section class="flex flex-col">${each(resources, (resource) => {
-        return `<div><a href="${"/docs/api/v1/" + escape(resource.resource, true)}">${escape(resource.method)} ${escape(resource.resource)}</a> </div>`;
-      })}</section>`;
-    });
   }
 });
 
 // .svelte-kit/output/server/nodes/7.js
 var __exports8 = {};
 __export(__exports8, {
-  component: () => component6,
   fonts: () => fonts8,
   imports: () => imports8,
   index: () => index8,
-  stylesheets: () => stylesheets8
+  stylesheets: () => stylesheets8,
+  universal: () => page_ts_exports3,
+  universal_id: () => universal_id3
 });
-var index8, component_cache6, component6, imports8, stylesheets8, fonts8;
+var index8, universal_id3, imports8, stylesheets8, fonts8;
 var init__8 = __esm({
   ".svelte-kit/output/server/nodes/7.js"() {
+    init_page_ts3();
     index8 = 7;
-    component6 = async () => component_cache6 ?? (component_cache6 = (await Promise.resolve().then(() => (init_page_svelte2(), page_svelte_exports2))).default);
-    imports8 = ["_app/immutable/nodes/7.6c04ca58.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/each.c0e137c1.js", "_app/immutable/chunks/test.e18d91b4.js"];
+    universal_id3 = "src/routes/(docs)/docs/api/v1/+page.ts";
+    imports8 = ["_app/immutable/nodes/7.89afea9f.js", "_app/immutable/chunks/index.d7eb2526.js", "_app/immutable/chunks/control.f5b05b5f.js", "_app/immutable/chunks/test.e18d91b4.js"];
     stylesheets8 = [];
     fonts8 = [];
   }
 });
 
-// .svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_resource_/_page.ts.js
-var page_ts_exports3 = {};
-__export(page_ts_exports3, {
-  load: () => load3
-});
-function load3({ params }) {
-  return resources.find((r) => r.resource === params.resource);
-}
-var init_page_ts3 = __esm({
-  ".svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_resource_/_page.ts.js"() {
-    init_test();
-  }
-});
-
 // .svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_resource_/_page.svelte.js
-var page_svelte_exports3 = {};
-__export(page_svelte_exports3, {
-  default: () => Page3
+var page_svelte_exports2 = {};
+__export(page_svelte_exports2, {
+  default: () => Page2
 });
 function getType(i) {
   if (i === null)
@@ -1027,10 +1025,11 @@ function format(i) {
     return i.toString();
   return i;
 }
-var css$1, JsonView, css2, Page3;
-var init_page_svelte3 = __esm({
+var css$1, JsonView, css2, Page2;
+var init_page_svelte2 = __esm({
   ".svelte-kit/output/server/entries/pages/(docs)/docs/api/v1/_resource_/_page.svelte.js"() {
     init_ssr();
+    init_test();
     init_stores();
     css$1 = {
       code: ".svelte-6z96o6:where(._jsonList){list-style:none;margin:0;padding:0;padding-left:var(--jsonPaddingLeft, 1rem);border-left:var(--jsonBorderLeft, 1px dotted)}.svelte-6z96o6:where(._jsonBkt){color:var(--jsonBracketColor, currentcolor)}.svelte-6z96o6:where(._jsonBkt):not(.empty):hover{cursor:pointer;background:var(--jsonBracketHoverBackground, #e5e7eb)}.svelte-6z96o6:where(._jsonSep){color:var(--jsonSeparatorColor, currentcolor)}.svelte-6z96o6:where(._jsonKey){color:var(--jsonKeyColor, currentcolor)}.svelte-6z96o6:where(._jsonVal){color:var(--jsonValColor, #9ca3af)}:where(._jsonVal).string.svelte-6z96o6{color:var(--jsonValStringColor, #059669)}:where(._jsonVal).number.svelte-6z96o6{color:var(--jsonValNumberColor, #d97706)}:where(._jsonVal).boolean.svelte-6z96o6{color:var(--jsonValBooleanColor, #2563eb)}",
@@ -1080,19 +1079,16 @@ var init_page_svelte3 = __esm({
       code: ".json-wrapper.svelte-159rr0q{--jsonPaddingLeft:2rem}",
       map: null
     };
-    Page3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+    Page2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       let resource;
       let $page, $$unsubscribe_page;
       $$unsubscribe_page = subscribe(page, (value) => $page = value);
-      let { data } = $$props;
-      if ($$props.data === void 0 && $$bindings.data && data !== void 0)
-        $$bindings.data(data);
       $$result.css.add(css2);
-      resource = data;
+      resource = resources.find((r) => r.resource === $page.params.resource);
       $$unsubscribe_page();
       return `<div class="flex flex-col gap-4"><section><h1 class="text-5xl pb-4">${escape(resource.method)} ${escape(resource.resource)}</h1> <p>${escape(resource.description)}</p></section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-17gj13b">Resource URL</h2> ${resource.method === "GET" ? `<a class="text-red-500 font-mono underline underline-offset-4" href="${escape($page.url.origin, true) + "/" + escape(resource.resource_url, true)}">${escape($page.url.origin)}/${escape(resource.resource_url)}</a>` : `<code class="text-red-500">${escape($page.url.origin)}/${escape(resource.resource_url)}</code>`}</section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-xzians">Resource Information</h2> <table class="rounded overflow-hidden"><tr class="bg-zinc-800 border-b"><td class="p-2 border-r" data-svelte-h="svelte-dmvkbs">Response formats</td> <td class="p-2">${escape(resource.information.response_format)}</td></tr> <tr class="bg-zinc-700"><td class="p-2 border-r" data-svelte-h="svelte-12jwuuq">Requires authentication?</td> <td class="p-2">${escape(resource.information.requires_auth ? "Yes" : "No")}</td></tr></table></section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-1w9hm1m">Parameters</h2> ${resource.parameters.length === 0 ? `<p data-svelte-h="svelte-1cfsefb">-</p>` : `<p data-svelte-h="svelte-1xg7emz">TODO!</p>`}</section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-zkl3tf">Response codes</h2> <table class="rounded overflow-hidden"><thead data-svelte-h="svelte-173em9r"><tr class="border-b bg-zinc-800"><th class="border-r p-2">Code</th> <th class="p-2">Reason</th></tr></thead> <tbody>${each(resource.responses, (response) => {
         return `<tr class="odd:bg-zinc-700 even:bg-zinc-800"><td class="p-2 border-r">${escape(response.code)}</td> <td class="p-2">${escape(response.reason)}</td> </tr>`;
-      })}</tbody></table></section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-11pajpr">Example Request</h2> <code class="text-red-500 bg-zinc-800 p-2 rounded">${escape(resource.method)} ${escape($page.url.origin)}/${escape(resource.sample_request)}</code></section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-a1q8bz">Example Response</h2> <div class="bg-zinc-700 rounded p-2 font-mono json-wrapper svelte-159rr0q">${validate_component(JsonView, "JsonView").$$render($$result, { json: resource.sample_response }, {}, {})}</div></section> </div>`;
+      })}</tbody></table></section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-11pajpr">Example Request</h2> <p class="text-red-500 bg-zinc-800 p-2 rounded font-mono">${escape(resource.method)} ${escape($page.url.origin)}/${escape(resource.sample_request)}</p></section> <section><h2 class="text-4xl pb-6" data-svelte-h="svelte-a1q8bz">Example Response</h2> <div class="bg-zinc-700 rounded p-2 font-mono json-wrapper svelte-159rr0q">${validate_component(JsonView, "JsonView").$$render($$result, { json: resource.sample_response }, {}, {})}</div></section> </div>`;
     });
   }
 });
@@ -1100,22 +1096,18 @@ var init_page_svelte3 = __esm({
 // .svelte-kit/output/server/nodes/8.js
 var __exports9 = {};
 __export(__exports9, {
-  component: () => component7,
+  component: () => component6,
   fonts: () => fonts9,
   imports: () => imports9,
   index: () => index9,
-  stylesheets: () => stylesheets9,
-  universal: () => page_ts_exports3,
-  universal_id: () => universal_id3
+  stylesheets: () => stylesheets9
 });
-var index9, component_cache7, component7, universal_id3, imports9, stylesheets9, fonts9;
+var index9, component_cache6, component6, imports9, stylesheets9, fonts9;
 var init__9 = __esm({
   ".svelte-kit/output/server/nodes/8.js"() {
-    init_page_ts3();
     index9 = 8;
-    component7 = async () => component_cache7 ?? (component_cache7 = (await Promise.resolve().then(() => (init_page_svelte3(), page_svelte_exports3))).default);
-    universal_id3 = "src/routes/(docs)/docs/api/v1/[resource]/+page.ts";
-    imports9 = ["_app/immutable/nodes/8.82d8259c.js", "_app/immutable/chunks/test.e18d91b4.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/each.c0e137c1.js", "_app/immutable/chunks/stores.ebec66b3.js", "_app/immutable/chunks/singletons.01cf5024.js"];
+    component6 = async () => component_cache6 ?? (component_cache6 = (await Promise.resolve().then(() => (init_page_svelte2(), page_svelte_exports2))).default);
+    imports9 = ["_app/immutable/nodes/8.974f6040.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js", "_app/immutable/chunks/each.c0e137c1.js", "_app/immutable/chunks/test.e18d91b4.js", "_app/immutable/chunks/stores.4267bdef.js", "_app/immutable/chunks/singletons.c3d64619.js"];
     stylesheets9 = ["_app/immutable/assets/8.da1d174e.css"];
     fonts9 = [];
   }
@@ -19954,7 +19946,7 @@ var options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "1hoq76a"
+  version_hash: "1jftzx2"
 };
 function get_hooks() {
   return {};
@@ -23281,7 +23273,7 @@ var manifest = (() => {
     assets: /* @__PURE__ */ new Set(["favicon.png", "fonts/overpass/overpass-mono-v16-latin-300.woff2", "fonts/overpass/overpass-mono-v16-latin-500.woff2", "fonts/overpass/overpass-mono-v16-latin-600.woff2", "fonts/overpass/overpass-mono-v16-latin-700.woff2", "fonts/overpass/overpass-mono-v16-latin-regular.woff2", "fonts/overpass/overpass-v13-latin-100.woff2", "fonts/overpass/overpass-v13-latin-100italic.woff2", "fonts/overpass/overpass-v13-latin-200.woff2", "fonts/overpass/overpass-v13-latin-200italic.woff2", "fonts/overpass/overpass-v13-latin-300.woff2", "fonts/overpass/overpass-v13-latin-300italic.woff2", "fonts/overpass/overpass-v13-latin-500.woff2", "fonts/overpass/overpass-v13-latin-500italic.woff2", "fonts/overpass/overpass-v13-latin-600.woff2", "fonts/overpass/overpass-v13-latin-600italic.woff2", "fonts/overpass/overpass-v13-latin-700.woff2", "fonts/overpass/overpass-v13-latin-700italic.woff2", "fonts/overpass/overpass-v13-latin-800.woff2", "fonts/overpass/overpass-v13-latin-800italic.woff2", "fonts/overpass/overpass-v13-latin-900.woff2", "fonts/overpass/overpass-v13-latin-900italic.woff2", "fonts/overpass/overpass-v13-latin-italic.woff2", "fonts/overpass/overpass-v13-latin-regular.woff2"]),
     mimeTypes: { ".png": "image/png", ".woff2": "font/woff2" },
     _: {
-      client: { "start": "_app/immutable/entry/start.ba056cf3.js", "app": "_app/immutable/entry/app.b6fc6f52.js", "imports": ["_app/immutable/entry/start.ba056cf3.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/singletons.01cf5024.js", "_app/immutable/chunks/control.f5b05b5f.js", "_app/immutable/entry/app.b6fc6f52.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js"], "stylesheets": [], "fonts": [] },
+      client: { "start": "_app/immutable/entry/start.6cfb585b.js", "app": "_app/immutable/entry/app.ed7d8b8b.js", "imports": ["_app/immutable/entry/start.6cfb585b.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/singletons.c3d64619.js", "_app/immutable/chunks/control.f5b05b5f.js", "_app/immutable/entry/app.ed7d8b8b.js", "_app/immutable/chunks/scheduler.e108d1fd.js", "_app/immutable/chunks/index.c5e6bafe.js"], "stylesheets": [], "fonts": [] },
       nodes: [
         __memo(() => Promise.resolve().then(() => (init__(), __exports))),
         __memo(() => Promise.resolve().then(() => (init__2(), __exports2))),
