@@ -4,8 +4,8 @@
 	import { resources } from '$lib/static/test.json';
 </script>
 
-<div class="relative grid grid-rows-[auto_1fr_auto] min-h-screen">
-	<header class="bg-zinc-800 px-12 flex items-center justify-between shadow py-4">
+<div class="grid grid-rows-[auto_1fr_auto] min-h-screen">
+	<header class="flex px-12 bg-zinc-800 items-center justify-between shadow py-4">
 		<span class="text-lg text-mono uppercase tracking-wider">Rentee</span>
 		<span>API Reference</span>
 		<nav>
