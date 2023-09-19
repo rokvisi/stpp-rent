@@ -1,4 +1,5 @@
 <script>
+	import Footer from '$lib/components/Footer.svelte';
 	import FontPreload from '$lib/components/FontPreload.svelte';
 	import '../app.css';
 </script>
@@ -15,7 +16,10 @@
 	/>
 </svelte:head>
 
-<slot />
+<div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+	<slot />
+	<Footer />
+</div>
 
 <style lang="postcss">
 	:global(html) {
