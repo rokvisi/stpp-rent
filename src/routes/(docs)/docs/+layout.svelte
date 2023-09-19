@@ -10,7 +10,7 @@
 </Header>
 <div class="grid grid-cols-[auto_1fr]">
 	<aside
-		class="border-r border-stone-500 bg-neutral-800 pl-4 pr-8 pt-12 text-neutral-400 md:pl-8 md:pr-24 md:pt-20"
+		class="border-r border-stone-500 bg-neutral-800 pl-4 pr-4 pt-12 text-neutral-400 md:pl-8 md:pr-24 md:pt-20"
 	>
 		<p class="pb-2 font-semibold uppercase tracking-widest">Resources</p>
 		<ul>
@@ -30,7 +30,7 @@
 			{/each}
 		</ul>
 	</aside>
-	<main class="px-4 pb-4 pt-12 md:px-12 md:pb-10 md:pt-20">
+	<main class="px-4 pb-4 pt-10 md:px-12 md:pb-10 md:pt-20">
 		<slot />
 	</main>
 </div>
