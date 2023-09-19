@@ -2,11 +2,11 @@
 	import { page } from '$app/stores';
 	import { resources } from '$lib/static/test.json';
 	import Header from '$lib/components/Header.svelte';
+	import MainContent from '$lib/components/MainContent.svelte';
 </script>
 
 <Header>
-	<span slot="title">API Reference</span>
-	<a slot="nav" href="/">Home</a>
+	<a href="/">Home</a>
 </Header>
 <div class="grid grid-cols-[auto_1fr]">
 	<aside
@@ -30,7 +30,7 @@
 			{/each}
 		</ul>
 	</aside>
-	<main class="px-4 pb-4 pt-10 md:px-12 md:pb-10 md:pt-20">
+	<MainContent>
 		<slot />
-	</main>
+	</MainContent>
 </div>
