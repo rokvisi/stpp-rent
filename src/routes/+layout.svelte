@@ -16,7 +16,7 @@
 	/>
 </svelte:head>
 
-<div class="grid min-h-screen grid-rows-[auto_1fr_auto]">
+<div class="relative grid min-h-screen grid-rows-[auto_1fr_auto] overflow-hidden">
 	<slot />
 	<Footer />
 </div>
