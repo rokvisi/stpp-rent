@@ -1,14 +1,17 @@
-import { isValidDocumentationPathname } from "$lib/utils";
 import { resources } from '$lib/static/test.json';
 import { redirect } from "@sveltejs/kit";
 
-export async function handle({ event, resolve }) {
-    const pathname = event.url.pathname;
+function isValidDocumentationPathname(pathname: string) {
+    if (!pathname.startsWith('/docs')) return false;
+    return pathname.startsWith("/docs/api/v1") && !(pathname.endsWith("/docs/api/v1") || pathname.endsWith("/docs/api/v1/"));
+}
 
+export async function handle({ event, resolve }) {
     //* Handle api documentation route aliasing.
-    if (pathname.startsWith('/docs') && !isValidDocumentationPathname(pathname)) {
+    if (!isValidDocumentationPathname(event.url.pathname)) {
         throw redirect(308, `/docs/api/v1/${resources[0].resource}`);
     }
+
 
     //* TODO: Auth logic.
 

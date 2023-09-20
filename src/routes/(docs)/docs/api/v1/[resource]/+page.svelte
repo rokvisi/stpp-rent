@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { resources } from '$lib/static/test.json';
 	import { page } from '$app/stores';
 	import { JsonView } from '@zerodevx/svelte-json-view';
 
-	$: resource = resources.find((r) => r.resource === $page.params.resource)!;
+	export let data;
+	$: resource = data.resource;
 </script>
 
 <div class="flex flex-col gap-4">
