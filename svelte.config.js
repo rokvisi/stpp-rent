@@ -3,7 +3,6 @@ import { vitePreprocess } from '@sveltejs/kit/vite';
 import * as apiDocsJson from './src/lib/static/test.json' assert { type: "json" };
 
 function getApiDocsPages() {
-	console.log(apiDocsJson.default.resources)
 	return apiDocsJson.default.resources.map(r => `/docs/${r.resource_url}`);
 }
 
