@@ -1,5 +1,11 @@
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/kit/vite';
+import * as apiDocsJson from './src/lib/static/test.json' assert { type: "json" };
+
+function getApiDocsPages() {
+	console.log(apiDocsJson.default.resources)
+	return apiDocsJson.default.resources.map(r => `/docs/${r.resource_url}`);
+}
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -13,7 +19,10 @@ const config = {
 		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
 		adapter: adapter({
 			runtime: 'edge'
-		})
+		}),
+		prerender: {
+			entries: ["*", ...getApiDocsPages()]
+		}
 	}
 };
 
