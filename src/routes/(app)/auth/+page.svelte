@@ -1,6 +1,10 @@
+<script>
+	import { enhance } from '$app/forms';
+</script>
+
 <h1 class="pb-4 text-5xl">Auth page</h1>
 <div class="max-w-xs">
-	<form action="" method="POST" class="flex flex-col gap-2">
+	<form action="" method="POST" class="flex flex-col gap-2" use:enhance>
 		<input
 			name="username"
 			type="text"
