@@ -13,11 +13,9 @@ export async function POST({ request, cookies }) {
 	try {
 		//* 1. Zod validate the formData. (optional, but highly recommeded)
 		const { username, password } = authSchema.parse(requestBody);
-		console.log('/auth/login | ZOD VALID:', { username, password });
 
 		//* 2. Hash the password for database lookup.
 		const passwordHash = await hashPassword(password);
-		console.log('Hashed password:', passwordHash);
 
 		//* 3.1. Check if the user exists and the password matches.
 		const userInfo = await db.query.pgUsers.findFirst({
@@ -32,9 +30,6 @@ export async function POST({ request, cookies }) {
 		}
 
 		//* 4. Create a JWT token with *some* user information.
-		console.log('USER FOUND!');
-		// return new Response();
-
 		const iat = Math.floor(Date.now() / 1000);
 		const exp = iat + 60 * 60; // one hour
 		const jwt = await new jose.SignJWT(userInfo)
@@ -43,10 +38,6 @@ export async function POST({ request, cookies }) {
 			.setIssuedAt(iat)
 			.setNotBefore(iat)
 			.sign(new TextEncoder().encode(SECRET_JWT_SERVER_TOKEN));
-		console.log('/auth/login | JWT:', jwt);
-
-		// const a = await jose.jwtVerify(res, new TextEncoder().encode(SECRET_JWT_SERVER_TOKEN));
-		// console.log(a)
 
 		//* 4.3. Set http-only cookie with the JWT token.
 		cookies.set('token', jwt, {

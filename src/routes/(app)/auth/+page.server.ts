@@ -1,5 +1,4 @@
 import { redirect } from '@sveltejs/kit';
-import cookie from 'cookie';
 
 export const actions = {
 	login: async ({ fetch, request }) => {

@@ -27,7 +27,7 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	try {
 		const result = await jose.jwtVerify(jwt, new TextEncoder().encode(SECRET_JWT_SERVER_TOKEN));
 		event.locals.user = {
-			username: result.payload.role as string,
+			username: result.payload.username as string,
 			role: result.payload.role as string
 		};
 	} catch {

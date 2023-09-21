@@ -10,7 +10,10 @@
 
 	{#if $page.data.user}
 		<div class="inline-flex gap-2">
-			<span>{$page.data.user.username}({$page.data.user.role})</span>
+			<span
+				>{$page.data.user.username}<span class="text-xs italic">({$page.data.user.role})</span
+				></span
+			>
 			<form action="/auth?/logout" method="POST">
 				<button>Logout</button>
 			</form>
