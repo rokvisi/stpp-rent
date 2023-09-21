@@ -22,7 +22,7 @@ const apiDocumentationRouteAliasingHandle: Handle = async ({ event, resolve }) =
 const formDataParserHandle: Handle = async ({ event, resolve }) => {
 	try {
 		const formData = await event.request.formData();
-		if (event.request.method === 'POST') {
+		if (event.request.method === 'POST' && !event.url.pathname.startsWith('/api')) {
 			event.locals.formData = Object.fromEntries(formData);
 		}
 	} catch {
