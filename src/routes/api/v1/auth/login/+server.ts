@@ -1,4 +1,4 @@
-import { authSchema } from '$lib/zod_schemas.js';
+import { authSchemas } from '$lib/zod_schemas.js';
 import { error, redirect } from '@sveltejs/kit';
 import * as jose from 'jose';
 import { SECRET_JWT_SERVER_TOKEN } from '$env/static/private';
@@ -12,7 +12,7 @@ export async function POST({ request, cookies }) {
 
 	try {
 		//* 1. Zod validate the formData. (optional, but highly recommeded)
-		const { username, password } = authSchema.parse(requestBody);
+		const { username, password } = authSchemas.login.parse(requestBody);
 
 		//* 2. Hash the password for database lookup.
 		const passwordHash = await hashPassword(password);

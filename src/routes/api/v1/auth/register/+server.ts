@@ -1,6 +1,6 @@
 import { pgUsers } from '$lib/database/schema';
 import db from '$lib/server/database/db';
-import { authSchema } from '$lib/zod_schemas';
+import { authSchemas } from '$lib/zod_schemas';
 import { error } from '@sveltejs/kit';
 import { and, eq } from 'drizzle-orm';
 
@@ -9,7 +9,7 @@ export async function POST({ request }) {
 
 	try {
 		//* 1. Zod validate the formData. (optional, but highly recommeded)
-		const { username, password } = authSchema.parse(requestBody);
+		const { username, password, role } = authSchemas.register.parse(requestBody);
 
 		//* 2. Hash the password for database lookup.
 		const passwordHash = Buffer.from(
@@ -29,9 +29,9 @@ export async function POST({ request }) {
 
 		//* 4. Create the user.
 		await db.insert(pgUsers).values({
-			username: username,
+			username,
 			password: passwordHash,
-			role: 'rentee'
+			role
 		});
 
 		//TODO: Log the user in.
