@@ -2,7 +2,7 @@ import { redirect } from '@sveltejs/kit';
 
 export const actions = {
 	login: async ({ locals, fetch }) => {
-		await fetch('/api/v1/auth/login', {
+		const a = await fetch('/api/v1/auth/login', {
 			method: 'POST',
 			body: JSON.stringify(locals.formData)
 		});

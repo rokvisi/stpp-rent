@@ -27,4 +27,9 @@
 			<button formaction="?/login" class="w-full rounded border bg-stone-700 py-1">Login</button>
 		</div>
 	</form>
+
+	<button
+		class="rounded border px-2 py-1"
+		on:click={async () => await fetch('/api/v1/cook', { method: 'POST' })}>COOKIEEE!</button
+	>
 </div>
