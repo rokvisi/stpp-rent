@@ -33,7 +33,7 @@
 		on:click={async () => await fetch('/api/v1/cook', { method: 'POST' })}>COOKIEEE!</button
 	>
 
-	<form action="?/cook" method="POST">
+	<form action="?/cook" method="POST" use:enhance>
 		<button>Cookie222!</button>
 	</form>
 </div>
