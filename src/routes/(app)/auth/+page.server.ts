@@ -1,16 +1,27 @@
+import { redirect } from '@sveltejs/kit';
+
 export const actions = {
-    login: async ({ locals, fetch }) => {
-        console.log("Login form action", locals.formData);
-        await fetch("/api/v1/auth/login", {
-            method: "POST",
-            body: JSON.stringify(locals.formData)
-        });
-    },
-    register: async ({ locals, fetch }) => {
-        console.log("Register called", locals.formData);
-        await fetch("/api/v1/auth/register", {
-            method: "POST",
-            body: JSON.stringify(locals.formData)
-        });
-    }
-}
+	login: async ({ locals, fetch }) => {
+		await fetch('/api/v1/auth/login', {
+			method: 'POST',
+			body: JSON.stringify(locals.formData)
+		});
+
+		throw redirect(302, '/');
+	},
+	register: async ({ locals, fetch }) => {
+		await fetch('/api/v1/auth/register', {
+			method: 'POST',
+			body: JSON.stringify(locals.formData)
+		});
+
+		throw redirect(302, '/');
+	},
+	logout: async ({ fetch }) => {
+		await fetch('/api/v1/auth/logout', {
+			method: 'POST'
+		});
+
+		throw redirect(302, '/');
+	}
+};

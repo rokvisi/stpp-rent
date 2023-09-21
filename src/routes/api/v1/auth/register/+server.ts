@@ -20,7 +20,7 @@ export async function POST({ request }) {
 
 		//* 3. Check if the user exists and the password matches.
 		const userInfo = await db.query.pgUsers.findFirst({
-			where: and(eq(pgUsers.name, username), eq(pgUsers.password, passwordHash))
+			where: and(eq(pgUsers.username, username), eq(pgUsers.password, passwordHash))
 		});
 
 		//* 3.1. If the user already exists - return error response.
@@ -31,8 +31,9 @@ export async function POST({ request }) {
 
 		//* 4. Create the user.
 		await db.insert(pgUsers).values({
-			name: username,
-			password: passwordHash
+			username: username,
+			password: passwordHash,
+			role: 'rentee'
 		});
 
 		//TODO: Log the user in.

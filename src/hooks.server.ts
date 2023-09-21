@@ -1,33 +1,58 @@
+import { SECRET_JWT_SERVER_TOKEN } from '$env/static/private';
 import { resources } from '$lib/static/test.json';
-import { redirect, type Handle } from "@sveltejs/kit";
+import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
+import * as jose from 'jose';
 
 const apiDocumentationRouteAliasingHandle: Handle = async ({ event, resolve }) => {
-    function isValidDocumentationPathname(pathname: string) {
-        return pathname.startsWith("/docs/api/v1") && !(pathname.endsWith("/docs/api/v1") || pathname.endsWith("/docs/api/v1/"));
-    }
+	function isValidDocumentationPathname(pathname: string) {
+		return (
+			pathname.startsWith('/docs/api/v1') &&
+			!(pathname.endsWith('/docs/api/v1') || pathname.endsWith('/docs/api/v1/'))
+		);
+	}
 
-    if (event.url.pathname.startsWith('/docs') && !isValidDocumentationPathname(event.url.pathname)) {
-        throw redirect(308, `/docs/api/v1/${resources[0].resource}`);
-    }
+	if (event.url.pathname.startsWith('/docs') && !isValidDocumentationPathname(event.url.pathname)) {
+		throw redirect(308, `/docs/api/v1/${resources[0].resource}`);
+	}
 
-    return await resolve(event);
-}
+	return await resolve(event);
+};
 
 const formDataParserHandle: Handle = async ({ event, resolve }) => {
-    try {
-        const formData = await event.request.formData();
-        if (event.request.method === "POST") {
-            event.locals.formData = Object.fromEntries(formData);
-        }
-    }
-    catch { /*no op */ }
+	try {
+		const formData = await event.request.formData();
+		if (event.request.method === 'POST') {
+			event.locals.formData = Object.fromEntries(formData);
+		}
+	} catch {
+		/*no op */
+	}
 
-    return await resolve(event);
-}
+	return await resolve(event);
+};
 
 const authHandle: Handle = async ({ event, resolve }) => {
-    return await resolve(event);
-}
+	const jwt = event.cookies.get('token');
+	if (jwt === undefined) return await resolve(event);
 
-export const handle = sequence(apiDocumentationRouteAliasingHandle, formDataParserHandle, authHandle);
+	//TODO: DO ALL KINDS OF JWT CHECKS!
+	try {
+		const result = await jose.jwtVerify(jwt, new TextEncoder().encode(SECRET_JWT_SERVER_TOKEN));
+		event.locals.user = {
+			username: result.payload.role as string,
+			role: result.payload.role as string
+		};
+	} catch {
+		//* Invalid jwt
+		return await resolve(event);
+	}
+
+	return await resolve(event);
+};
+
+export const handle = sequence(
+	apiDocumentationRouteAliasingHandle,
+	formDataParserHandle,
+	authHandle
+);
