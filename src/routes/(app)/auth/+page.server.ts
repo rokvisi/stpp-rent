@@ -8,17 +8,6 @@ export const actions = {
 			body: JSON.stringify(Object.fromEntries(await event.request.formData()))
 		});
 
-		// //* Forward cookies
-		// const parsedCookies = cookie.parse(res.headers.getSetCookie()[0]);
-		// cookies.set('token', parsedCookies.token, {
-		// 	httpOnly: true,
-		// 	secure: true,
-		// 	...{
-		// 		...parsedCookies,
-		// 		token: undefined
-		// 	}
-		// });
-
 		throw redirect(302, '/');
 	},
 	register: async ({ locals, fetch, cookies }) => {
