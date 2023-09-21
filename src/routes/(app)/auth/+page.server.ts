@@ -3,15 +3,9 @@ import cookie from 'cookie';
 
 export const actions = {
 	login: async (event) => {
-		console.log('HERE');
-		// const o = Object.fromEntries(await event.request.formData());
-		console.log('HERE after form data');
-
-		console.log('IN LOGIN ACTION');
-
-		const res = await event.fetch('/api/v1/auth/login', {
+		await event.fetch('/api/v1/auth/login', {
 			method: 'POST',
-			body: JSON.stringify(event.locals)
+			body: JSON.stringify(Object.fromEntries(await event.request.formData()))
 		});
 
 		// //* Forward cookies

@@ -8,9 +8,7 @@ import { pgUsers } from '$lib/database/schema.js';
 import { hashPassword } from '$lib/server/auth_helper.js';
 
 export async function POST({ request, cookies }) {
-	console.log('IN LOGIN api');
 	const requestBody = await request.json();
-	console.log('IN LOGIN api - after body');
 
 	try {
 		//* 1. Zod validate the formData. (optional, but highly recommeded)

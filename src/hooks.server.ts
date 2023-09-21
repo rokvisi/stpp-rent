@@ -19,25 +19,9 @@ const apiDocumentationRouteAliasingHandle: Handle = async ({ event, resolve }) =
 	return await resolve(event);
 };
 
-const formDataParserHandle: Handle = async ({ event, resolve }) => {
-	try {
-		const formData = await event.request.formData();
-		if (event.request.method === 'POST' && !event.url.pathname.startsWith('/api')) {
-			event.locals.formData = Object.fromEntries(formData);
-		}
-	} catch {
-		/*no op */
-	}
-
-	return await resolve(event);
-};
-
 const authHandle: Handle = async ({ event, resolve }) => {
 	const jwt = event.cookies.get('token');
-	if (jwt === undefined) {
-		console.log('AUTH HANDLE | resolving event.');
-		return await resolve(event);
-	}
+	if (jwt === undefined) return await resolve(event);
 
 	//TODO: DO ALL KINDS OF JWT CHECKS!
 	try {
@@ -48,14 +32,9 @@ const authHandle: Handle = async ({ event, resolve }) => {
 		};
 	} catch {
 		//* Invalid jwt
-		return await resolve(event);
 	}
 
 	return await resolve(event);
 };
 
-export const handle = sequence(
-	apiDocumentationRouteAliasingHandle,
-	formDataParserHandle,
-	authHandle
-);
+export const handle = sequence(apiDocumentationRouteAliasingHandle, authHandle);
