@@ -29,8 +29,11 @@ export const actions = {
 
 		throw redirect(302, '/');
 	},
-	logout: async ({ cookies }) => {
-		cookies.delete('token', { path: '/' });
+	logout: async (event) => {
+		// cookies.delete('token', { path: '/' });
+		await event.fetch('/api/v1/auth/logout', {
+			method: 'POST'
+		});
 
 		throw redirect(302, '/');
 	}
