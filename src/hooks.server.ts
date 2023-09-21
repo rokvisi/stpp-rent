@@ -54,4 +54,8 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-export const handle = sequence(apiDocumentationRouteAliasingHandle, authHandle);
+export const handle = sequence(
+	apiDocumentationRouteAliasingHandle,
+	formDataParserHandle,
+	authHandle
+);
