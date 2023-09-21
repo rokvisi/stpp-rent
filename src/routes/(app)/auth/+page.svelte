@@ -32,4 +32,8 @@
 		class="rounded border px-2 py-1"
 		on:click={async () => await fetch('/api/v1/cook', { method: 'POST' })}>COOKIEEE!</button
 	>
+
+	<form action="?/cook" method="POST">
+		<button>Cookie222!</button>
+	</form>
 </div>

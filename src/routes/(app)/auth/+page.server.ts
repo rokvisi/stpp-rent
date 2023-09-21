@@ -23,5 +23,10 @@ export const actions = {
 		});
 
 		throw redirect(302, '/');
+	},
+	cook: async ({ fetch }) => {
+		await fetch('/api/v1/auth/cook', {
+			method: 'POST'
+		});
 	}
 };
