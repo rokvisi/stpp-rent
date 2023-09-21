@@ -2,38 +2,32 @@ import { redirect } from '@sveltejs/kit';
 import cookie from 'cookie';
 
 export const actions = {
-	login: async (event) => {
-		await event.fetch('/api/v1/auth/login', {
+	login: async ({ fetch, request }) => {
+		await fetch('/api/v1/auth/login', {
 			method: 'POST',
-			body: JSON.stringify(Object.fromEntries(await event.request.formData()))
+			body: JSON.stringify(Object.fromEntries(await request.formData()))
 		});
+
+		//TODO: Error handling.
 
 		throw redirect(302, '/');
 	},
-	register: async ({ locals, fetch, cookies }) => {
-		const res = await fetch('/api/v1/auth/register', {
+	register: async ({ locals, fetch }) => {
+		await fetch('/api/v1/auth/register', {
 			method: 'POST',
 			body: JSON.stringify(locals.formData)
 		});
 
-		//* Forward cookies
-		const parsedCookies = cookie.parse(res.headers.getSetCookie()[0]);
-		cookies.set('token', parsedCookies.token, {
-			httpOnly: true,
-			secure: true,
-			...{
-				...parsedCookies,
-				token: undefined
-			}
-		});
+		//TODO: Error handling.
 
 		throw redirect(302, '/');
 	},
-	logout: async (event) => {
-		// cookies.delete('token', { path: '/' });
-		await event.fetch('/api/v1/auth/logout', {
+	logout: async ({ fetch }) => {
+		await fetch('/api/v1/auth/logout', {
 			method: 'POST'
 		});
+
+		//TODO: Error handling.
 
 		throw redirect(302, '/');
 	}
