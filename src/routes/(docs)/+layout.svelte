@@ -12,7 +12,7 @@
 </Header>
 <div class="grid grid-cols-[auto_1fr]">
 	{#if $sidebar}
-		<section class="col-span-full block bg-zinc-700 px-20 py-20" in:slide={{ duration: 500 }}>
+		<section class="col-span-full block bg-zinc-700 px-20 py-20">
 			<p class="pb-2 font-semibold uppercase tracking-widest">Resources</p>
 			<nav>
 				<ul>
