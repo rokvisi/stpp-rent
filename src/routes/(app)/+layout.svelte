@@ -6,6 +6,7 @@
 
 <Header>
 	<a href="/docs/api/v1/{resources[0].resource}">Docs</a>
+	<a href="/auth">Login</a>
 </Header>
 <MainContent>
 	<slot />

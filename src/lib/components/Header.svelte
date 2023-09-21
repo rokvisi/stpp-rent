@@ -23,10 +23,10 @@
 				/>
 			</svg>
 		</button>
-		<span class="text-mono inline-block text-lg uppercase tracking-wider">Rentee</span>
+		<a href="/" class="text-mono inline-block text-lg uppercase tracking-wider">Rentee</a>
 	</div>
 	<span class="mx-auto">{getPageTitle($page.url.pathname)}</span>
-	<nav>
+	<nav class="space-x-4 md:space-x-8">
 		<slot />
 	</nav>
 </header>
