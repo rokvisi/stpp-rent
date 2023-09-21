@@ -5,13 +5,13 @@
 			name="username"
 			type="text"
 			placeholder="username"
-			value="ddd"
+			value="user1"
 			class="rounded border px-1 py-1 text-black"
 		/>
 		<input
 			name="password"
 			type="password"
-			value="aaa"
+			value="labas123"
 			placeholder="password"
 			class="rounded border px-1 py-1 text-black"
 		/>
