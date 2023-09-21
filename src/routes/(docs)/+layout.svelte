@@ -4,7 +4,6 @@
 	import Header from '$lib/components/Header.svelte';
 	import MainContent from '$lib/components/MainContent.svelte';
 	import { sidebar } from '$lib/stores/sidebar';
-	import { slide } from 'svelte/transition';
 </script>
 
 <Header>

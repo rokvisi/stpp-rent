@@ -4,7 +4,7 @@
 	import { getPageTitle } from '$lib/utils';
 </script>
 
-<header class="grid grid-cols-[auto_1fr_auto] bg-zinc-800 px-4 py-2 shadow md:px-12 md:py-4">
+<header class="grid grid-cols-[auto_1fr_auto] bg-zinc-800 px-4 py-4 shadow md:px-12">
 	<div class="flex items-center gap-3">
 		<button class="md:hidden" on:click={sidebar.toggle}
 			><svg
