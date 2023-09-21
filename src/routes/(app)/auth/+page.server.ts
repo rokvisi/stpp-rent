@@ -2,12 +2,16 @@ import { redirect } from '@sveltejs/kit';
 import cookie from 'cookie';
 
 export const actions = {
-	login: async ({ locals, fetch, cookies }) => {
+	login: async (event) => {
+		console.log('HERE');
+		const o = Object.fromEntries(await event.request.formData());
+		console.log('HERE after form data', o);
+
 		console.log('IN LOGIN ACTION');
 
-		const res = await fetch('/api/v1/auth/login', {
+		const res = await event.fetch('/api/v1/auth/login', {
 			method: 'POST',
-			body: JSON.stringify(locals.formData)
+			body: JSON.stringify(o)
 		});
 
 		// //* Forward cookies

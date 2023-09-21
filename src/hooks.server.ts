@@ -34,7 +34,10 @@ const formDataParserHandle: Handle = async ({ event, resolve }) => {
 
 const authHandle: Handle = async ({ event, resolve }) => {
 	const jwt = event.cookies.get('token');
-	if (jwt === undefined) return await resolve(event);
+	if (jwt === undefined) {
+		console.log('AUTH HANDLE | resolving event.');
+		return await resolve(event);
+	}
 
 	//TODO: DO ALL KINDS OF JWT CHECKS!
 	try {
@@ -51,8 +54,4 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-export const handle = sequence(
-	apiDocumentationRouteAliasingHandle,
-	formDataParserHandle,
-	authHandle
-);
+export const handle = sequence(apiDocumentationRouteAliasingHandle, authHandle);
