@@ -2,7 +2,7 @@ import { pgUsers } from '$lib/database/schema';
 import db from '$lib/server/database/db';
 import { authSchemas } from '$lib/zod_schemas';
 import { error } from '@sveltejs/kit';
-import { and, eq } from 'drizzle-orm';
+import { eq } from 'drizzle-orm';
 
 export async function POST({ request }) {
 	const requestBody = await request.json();
@@ -18,7 +18,7 @@ export async function POST({ request }) {
 
 		//* 3. Check if the user exists and the password matches.
 		const userInfo = await db.query.pgUsers.findFirst({
-			where: and(eq(pgUsers.username, username), eq(pgUsers.password, passwordHash))
+			where: eq(pgUsers.username, username)
 		});
 
 		//* 3.1. If the user already exists - return error response.

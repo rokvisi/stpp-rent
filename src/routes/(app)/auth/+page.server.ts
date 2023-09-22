@@ -1,5 +1,5 @@
-import { authSchemas } from '$lib/zod_schemas.js';
-import { fail, redirect } from '@sveltejs/kit';
+import { authSchemas } from '$lib/zod_schemas';
+import { error, fail, redirect } from '@sveltejs/kit';
 import { superValidate, setError, message } from 'sveltekit-superforms/server';
 
 export async function load() {
@@ -47,11 +47,12 @@ export const actions = {
 		throw redirect(302, '/');
 	},
 	logout: async ({ fetch }) => {
-		await fetch('/api/v1/auth/logout', {
+		const res = await fetch('/api/v1/auth/logout', {
 			method: 'POST'
 		});
-
-		//TODO: Error handling.
+		if (!res.ok) {
+			throw error(400);
+		}
 
 		throw redirect(302, '/auth');
 	}
