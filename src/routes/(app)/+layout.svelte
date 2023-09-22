@@ -6,8 +6,6 @@
 </script>
 
 <Header>
-	<a href="/docs/api/v1/{resources[0].resource}">Docs</a>
-
 	{#if $page.data.user}
 		<div class="inline-flex gap-2">
 			<span
@@ -21,6 +19,8 @@
 	{:else}
 		<a href="/auth">Login</a>
 	{/if}
+
+	<a href="/docs/api/v1/{resources[0].resource}">Docs</a>
 </Header>
 <MainContent>
 	<slot />
