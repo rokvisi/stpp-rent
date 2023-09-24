@@ -37,11 +37,28 @@
 		</table>
 	</section>
 	<section>
-		<h2 class="pb-6 text-4xl">Parameters</h2>
-		{#if resource.parameters.length === 0}
+		<h2 class="pb-6 text-4xl">Body parameters</h2>
+		{#if resource.body_parameters.length === 0}
 			<p>-</p>
 		{:else}
-			<p>TODO!</p>
+			<table class="overflow-hidden rounded">
+				<thead>
+					<tr class="border-b bg-zinc-800">
+						<th class="border-r p-2">Name</th>
+						<th class="border-r p-2">Required</th>
+						<th class="p-2">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					{#each resource.body_parameters as parameter}
+						<tr class="odd:bg-zinc-700 even:bg-zinc-800">
+							<td class="border-r p-2">{parameter.name}</td>
+							<td class="border-r p-2">{parameter.required}</td>
+							<td class="p-2">{parameter.description}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
 		{/if}
 	</section>
 	<section>
@@ -67,13 +84,20 @@
 		<h2 class="pb-6 text-4xl">Example Request</h2>
 		<p class="rounded bg-zinc-800 p-2 font-mono text-red-500">
 			{resource.method}
-			{$page.url.origin}/{resource.sample_request}
+			{$page.url.origin}/{resource.sample_request.url}
 		</p>
+		{#if resource.sample_request.body}
+			<div class="json-wrapper rounded bg-zinc-700 p-2 font-mono">
+				<JsonView json={resource.sample_request.body} />
+			</div>
+		{/if}
 	</section>
 	<section>
 		<h2 class="pb-6 text-4xl">Example Response</h2>
+
 		<div class="json-wrapper rounded bg-zinc-700 p-2 font-mono">
-			<JsonView json={resource.sample_response} />
+			<p class:text-green-500={resource.sample_response.status}>200</p>
+			<JsonView json={resource.sample_response.body} />
 		</div>
 	</section>
 </div>

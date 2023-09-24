@@ -1,5 +1,5 @@
 import { SECRET_JWT_SERVER_TOKEN } from '$env/static/private';
-import { resources } from '$lib/static/test.json';
+import { resources } from '$lib/static/api_docs.json';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import * as jose from 'jose';

@@ -4,7 +4,7 @@ import { createInsertSchema } from 'drizzle-zod';
 export const pgUsers = pgTable('users', {
 	id: serial('id').primaryKey().notNull(),
 	created_at: timestamp('created_at').defaultNow().notNull(),
-	username: varchar('username', { length: 256 }).notNull(),
+	username: varchar('username', { length: 256 }).notNull().unique(),
 	password: text('password').notNull(),
 	role: varchar('role', { length: 256 }).notNull()
 });

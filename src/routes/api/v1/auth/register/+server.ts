@@ -1,43 +1,52 @@
 import { pgUsers } from '$lib/database/schema';
+import { parseRequestBodyBySchema } from '$lib/server/api_helpers';
+import { createAndSetAuthCookie, hashPassword } from '$lib/server/auth_helper';
 import db from '$lib/server/database/db';
 import { authSchemas } from '$lib/zod_schemas';
-import { error } from '@sveltejs/kit';
-import { eq } from 'drizzle-orm';
+import { error, json } from '@sveltejs/kit';
 
-export async function POST({ request }) {
-	const requestBody = await request.json();
+export async function POST({ request, cookies }) {
+	//* 1. Zod validate the request body.
+	const { username, password, role } = await parseRequestBodyBySchema(
+		request,
+		authSchemas.register,
+		'The data provided in the request body is invalid. Please check your registration information and try again.'
+	);
+
+	//* 2. Hash the password for database lookup.
+	const passwordHash = await hashPassword(password);
 
 	try {
-		//* 1. Zod validate the formData. (optional, but highly recommeded)
-		const { username, password, role } = authSchemas.register.parse(requestBody);
-
-		//* 2. Hash the password for database lookup.
-		const passwordHash = Buffer.from(
-			await crypto.subtle.digest('SHA-256', new TextEncoder().encode(password))
-		).toString('base64');
-
-		//* 3. Check if the user exists and the password matches.
-		const userInfo = await db.query.pgUsers.findFirst({
-			where: eq(pgUsers.username, username)
-		});
-
-		//* 3.1. If the user already exists - return error response.
-		if (userInfo !== undefined) {
-			console.log('User already exists!');
-			throw error(401); //TODO: Add proper error message.
-		}
-
-		//* 4. Create the user.
+		//* 3. Try to insert the user. It fails if the username is already in-use.
 		await db.insert(pgUsers).values({
 			username,
 			password: passwordHash,
 			role
 		});
-
-		//TODO: Log the user in.
-
-		return new Response(); //TODO: Add response.
 	} catch (e) {
-		throw error(401); //TODO: Add proper error message.
+		//? Database error.
+		if (e instanceof Error && e.constructor.name === 'DatabaseError') {
+			//? Username already exists.
+			if ((e as any).constraint === 'username_unique') {
+				throw error(
+					409,
+					'The requested username is already taken. Please choose a different username.'
+				);
+			}
+
+			//? Generic database error.
+			throw error(
+				503,
+				'Sorry, we are currently experiencing technical difficulties. Please try again later.'
+			);
+		}
 	}
+
+	//* 4. User created. Log them in.
+	await createAndSetAuthCookie({ username, role }, cookies);
+
+	//* 5. Return success response.
+	return json({
+		message: 'Registration successful!'
+	});
 }

@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import Header from '$lib/components/Header.svelte';
 	import MainContent from '$lib/components/MainContent.svelte';
-	import { resources } from '$lib/static/test.json';
+	import { resources } from '$lib/static/api_docs.json';
 </script>
 
 <Header>

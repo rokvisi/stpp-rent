@@ -1,66 +1,49 @@
 import { authSchemas } from '$lib/zod_schemas.js';
-import { error, redirect } from '@sveltejs/kit';
-import * as jose from 'jose';
-import { SECRET_JWT_SERVER_TOKEN } from '$env/static/private';
+import { error, json, redirect } from '@sveltejs/kit';
 import db from '$lib/server/database/db';
 import { and, eq } from 'drizzle-orm';
 import { pgUsers } from '$lib/database/schema.js';
-import { hashPassword } from '$lib/server/auth_helper.js';
+import { createAndSetAuthCookie, hashPassword } from '$lib/server/auth_helper.js';
+import { parseRequestBodyBySchema } from '$lib/server/api_helpers';
 
-export async function POST({ request, cookies }) {
-	const requestBody = await request.json();
-
+async function getUserByCredentials(username: string, passwordHash: string) {
 	try {
-		//* 1. Zod validate the formData. (optional, but highly recommeded)
-		const { username, password } = authSchemas.login.parse(requestBody);
-
-		//* 2. Hash the password for database lookup.
-		const passwordHash = await hashPassword(password);
-
-		//* 3.1. Check if the user exists and the password matches.
-		const userInfo = await db.query.pgUsers.findFirst({
+		return await db.query.pgUsers.findFirst({
 			where: and(eq(pgUsers.username, username), eq(pgUsers.password, passwordHash)),
 			columns: { username: true, role: true }
 		});
-
-		//* 3.2. If the user doesn't exist or the password doesn't match - return error response.
-		if (userInfo === undefined) {
-			console.log('User not found!');
-			throw error(400); //TODO: Add proper error message.
-		}
-
-		//* 4. Create a JWT token with *some* user information.
-		const iat = Math.floor(Date.now() / 1000);
-		const exp = iat + 60 * 60; // one hour
-		const jwt = await new jose.SignJWT(userInfo)
-			.setProtectedHeader({ alg: 'HS256', typ: 'JWT' })
-			.setExpirationTime(exp)
-			.setIssuedAt(iat)
-			.setNotBefore(iat)
-			.sign(new TextEncoder().encode(SECRET_JWT_SERVER_TOKEN));
-
-		//* 4.3. Set http-only cookie with the JWT token.
-		cookies.set('token', jwt, {
-			httpOnly: true,
-			secure: true,
-			sameSite: 'strict',
-			maxAge: 60 * 60, //? 1 Hour
-			path: '/'
-		});
-
-		//* 5. Return the success response.
-		return new Response();
 	} catch (e) {
-		//* Handle zod errors.
-		// TODO:
-
-		//* Handle JWT errors
-
-		//* Handle other (db, ...) errors
-		// TODO:
-
-		console.log('/auth/login | ERROR', requestBody);
-		console.log(e);
-		throw error(401);
+		throw error(
+			503,
+			'Sorry, we are currently experiencing technical difficulties. Please try again later.'
+		);
 	}
+}
+
+export async function POST({ request, cookies }) {
+	//* 1. Zod validate the request body.
+	const { username, password } = await parseRequestBodyBySchema(
+		request,
+		authSchemas.login,
+		'The data provided in the request body is invalid. Please check your login information and try again.'
+	);
+
+	//* 2. Hash the password for database lookup.
+	const passwordHash = await hashPassword(password);
+
+	//* 3.1. Check if a user exists with the given credentials.
+	const userInfo = await getUserByCredentials(username, passwordHash);
+
+	//* 3.2. If the user doesn't exist or the password doesn't match - return error response.
+	if (userInfo === undefined) {
+		throw error(401, 'Invalid username or password. Please check your credentials and try again.');
+	}
+
+	//* 4. Create the auth token and set the cookie header.
+	await createAndSetAuthCookie(userInfo, cookies);
+
+	//* 5. Return the success response.
+	return json({
+		message: 'Login successful!'
+	});
 }

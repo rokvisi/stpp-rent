@@ -1,9 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { resources } from '$lib/static/test.json';
+	import { resources } from '$lib/static/api_docs.json';
 	import Header from '$lib/components/Header.svelte';
 	import MainContent from '$lib/components/MainContent.svelte';
 	import { sidebar } from '$lib/stores/sidebar';
+	import { beforeNavigate } from '$app/navigation';
+
+	beforeNavigate(() => {
+		sidebar.hide();
+		console.log('sidebar closed after navigate');
+	});
 </script>
 
 <Header>

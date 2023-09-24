@@ -11,7 +11,7 @@
 </script>
 
 <h1 class="pb-4 text-5xl">Auth page</h1>
-<div class="flex max-w-xs flex-col gap-3">
+<div class="mx-auto flex max-w-xs flex-col gap-3 sm:mx-0">
 	<form method="POST" class="flex flex-col gap-3" use:enhance>
 		<div>
 			<label for="username">username</label>
