@@ -1,6 +1,6 @@
 import { SECRET_JWT_SERVER_TOKEN } from '$env/static/private';
 import type { Cookies } from '@sveltejs/kit';
-import jose from 'jose';
+import * as jose from 'jose';
 
 export async function hashPassword(password: string) {
 	return Buffer.from(
