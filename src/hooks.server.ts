@@ -1,4 +1,4 @@
-import { SECRET_JWT_SERVER_TOKEN } from '$env/static/private';
+import { PRIVATE_JWT_SERVER_SECRET } from '$env/static/private';
 import { resources } from '$lib/static/api_docs.json';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
@@ -25,7 +25,7 @@ const authHandle: Handle = async ({ event, resolve }) => {
 
 	//TODO: DO ALL KINDS OF JWT CHECKS!
 	try {
-		const result = await jose.jwtVerify(jwt, new TextEncoder().encode(SECRET_JWT_SERVER_TOKEN));
+		const result = await jose.jwtVerify(jwt, new TextEncoder().encode(PRIVATE_JWT_SERVER_SECRET));
 		event.locals.user = {
 			username: result.payload.username as string,
 			role: result.payload.role as string

@@ -1,4 +1,4 @@
-import { SECRET_JWT_SERVER_TOKEN } from '$env/static/private';
+import { PRIVATE_JWT_SERVER_SECRET } from '$env/static/private';
 import type { Cookies } from '@sveltejs/kit';
 import * as jose from 'jose';
 
@@ -23,7 +23,7 @@ export async function createAndSetAuthCookie(
 		.setExpirationTime(exp)
 		.setIssuedAt(iat)
 		.setNotBefore(iat)
-		.sign(new TextEncoder().encode(SECRET_JWT_SERVER_TOKEN));
+		.sign(new TextEncoder().encode(PRIVATE_JWT_SERVER_SECRET));
 
 	//* 4.3. Set http-only cookie with the JWT token.
 	cookies.set('token', jwt, {
@@ -35,4 +35,4 @@ export async function createAndSetAuthCookie(
 	});
 }
 
-export async function userExists(username: string) {}
+export async function userExists(username: string) { }
