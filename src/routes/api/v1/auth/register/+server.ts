@@ -24,22 +24,19 @@ export async function POST({ request, cookies }) {
 			role
 		});
 	} catch (e) {
-		//? Database error.
-		if (e instanceof Error && e.constructor.name === 'DatabaseError') {
-			//? Username already exists.
-			if ((e as any).constraint === 'username_unique') {
-				throw error(
-					409,
-					'The requested username is already taken. Please choose a different username.'
-				);
-			}
-
-			//? Generic database error.
+		//? Username already in-use.
+		if (e instanceof Error && e.message.includes("duplicate key")) {
 			throw error(
-				503,
-				'Sorry, we are currently experiencing technical difficulties. Please try again later.'
+				409,
+				'The requested username is already taken. Please choose a different username.'
 			);
 		}
+
+		//? Generic database error.
+		throw error(
+			503,
+			'Sorry, we are currently experiencing technical difficulties. Please try again later.'
+		);
 	}
 
 	//* 4. User created. Log them in.

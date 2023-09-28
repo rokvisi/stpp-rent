@@ -23,9 +23,8 @@ export const actions = {
 			body: JSON.stringify(form.data)
 		});
 		if (!res.ok) {
-			return message(form, 'Incorrect username or password!', {
-				status: 403
-			});
+			const resBody = await res.json();
+			return message(form, resBody.message, { status: res.status as any });
 		}
 
 		throw redirect(302, '/');
@@ -41,7 +40,11 @@ export const actions = {
 			body: JSON.stringify(form.data)
 		});
 		if (!res.ok) {
-			return setError(form, 'username', 'Username already exists.');
+			if (res.status === 409) {
+				return setError(form, 'username', 'Username already exists.');
+			}
+			const resBody = await res.json();
+			return message(form, resBody.message, { status: res.status as any });
 		}
 
 		throw redirect(302, '/');
