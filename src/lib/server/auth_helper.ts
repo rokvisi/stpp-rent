@@ -34,5 +34,3 @@ export async function createAndSetAuthCookie(
 		path: '/'
 	});
 }
-
-export async function userExists(username: string) { }

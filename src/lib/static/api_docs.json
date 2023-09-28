@@ -3,6 +3,7 @@
 		{
 			"method": "GET",
 			"resource": "users",
+			"resource_group": "General",
 			"resource_url": "api/v1/users",
 			"description": "Gets a list of all registered users.",
 			"information": {
@@ -44,8 +45,9 @@
 		{
 			"method": "POST",
 			"resource": "register",
+			"resource_group": "Auth",
 			"resource_url": "api/v1/auth/register",
-			"description": "Registers a user.",
+			"description": "Registers a user (returns an http-only cookie with the auth token).",
 			"information": {
 				"response_format": "JSON",
 				"requires_auth": false
@@ -107,8 +109,9 @@
 		{
 			"method": "POST",
 			"resource": "login",
+			"resource_group": "Auth",
 			"resource_url": "api/v1/auth/login",
-			"description": "Logs in a user.",
+			"description": "Logs in a user (returns an http-only cookie with the auth token).",
 			"information": {
 				"response_format": "JSON",
 				"requires_auth": false
@@ -158,6 +161,33 @@
 				"status": 200,
 				"body": {
 					"message": "Login successful!"
+				}
+			}
+		},
+		{
+			"method": "POST",
+			"resource": "logout",
+			"resource_group": "Auth",
+			"resource_url": "api/v1/auth/logout",
+			"description": "Deletes the user auth token cookie.",
+			"information": {
+				"response_format": "JSON",
+				"requires_auth": false
+			},
+			"body_parameters": [],
+			"responses": [
+				{
+					"code": 200,
+					"reason": "Log out successful!"
+				}
+			],
+			"sample_request": {
+				"url": "api/v1/auth/logout"
+			},
+			"sample_response": {
+				"status": 200,
+				"body": {
+					"message": "Log out successful!"
 				}
 			}
 		}

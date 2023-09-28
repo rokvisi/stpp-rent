@@ -1,5 +1,5 @@
 import { authSchemas } from '$lib/zod_schemas.js';
-import { error, json, redirect } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 import db from '$lib/server/database/db';
 import { and, eq } from 'drizzle-orm';
 import { pgUsers } from '$lib/database/schema.js';

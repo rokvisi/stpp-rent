@@ -8,7 +8,7 @@
 
 <div class="flex flex-col gap-4">
 	<section>
-		<h1 class="pb-4 text-5xl">{resource.method} {resource.resource}</h1>
+		<h1 class="pb-4 text-5xl">{resource.resource_group} - {resource.method} {resource.resource}</h1>
 		<p>{resource.description}</p>
 	</section>
 	<section>

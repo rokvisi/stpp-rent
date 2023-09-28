@@ -23,16 +23,13 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	const jwt = event.cookies.get('token');
 	if (jwt === undefined) return await resolve(event);
 
-	//TODO: DO ALL KINDS OF JWT CHECKS!
 	try {
 		const result = await jose.jwtVerify(jwt, new TextEncoder().encode(PRIVATE_JWT_SERVER_SECRET));
 		event.locals.user = {
 			username: result.payload.username as string,
 			role: result.payload.role as string
 		};
-	} catch {
-		//* Invalid jwt
-	}
+	} catch { /* noop */ }
 
 	return await resolve(event);
 };
