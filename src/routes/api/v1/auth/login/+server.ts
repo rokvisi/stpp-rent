@@ -51,16 +51,7 @@ async function getUserByCredentials(username: string, passwordHash: string) {
  *                 type: string
 */
 
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwicm9sZSI6InJlbnRlZSIsImV4cCI6MTY5NjAwODQ0NSwiaWF0IjoxNjk2MDA0ODQ1LCJuYmYiOjE2OTYwMDQ4NDV9.RijnW7-8I84YsF5475hPjRHHPN6IHYqB0PK0IJtvykw
 export async function POST({ request, cookies, locals }) {
-	if (!locals.user) {
-		console.log("NO AUTH!")
-		throw error(400);
-	}
-	else {
-		console.log("AUTH AS: ", locals.user)
-	}
-
 	//* 1. Zod validate the request body.
 	const { username, password } = await parseRequestBodyBySchema(
 		request,

@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { resources } from '$lib/static/api_docs.json';
-	import { paths } from '$lib/static/generated.json';
 	import _ from 'lodash-es';
-
-	console.log('GENERATED!!!', paths);
 
 	const resource_groups = Object.keys(_.groupBy(resources, (r) => r.resource_group)).sort((a, b) =>
 		a.localeCompare(b, 'en', { numeric: true })

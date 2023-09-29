@@ -9,28 +9,19 @@ const options = {
             version: '1.0.0',
         },
         components: {
-            schemas: {
-                authResponse: {
-                    type: "object",
-                    properties: {
-                        message: {
-                            type: "string"
-                        }
-                    }
-                }
-            },
-            securitySchemes: {
-                cookieAuth: {
-                    type: "apiKey",
-                    in: "cookie",
-                    name: "token"
-                }
-            }
+            // schemas: {
+            //     authResponse: {
+            //         type: "object",
+            //         properties: {
+            //             message: {
+            //                 type: "string"
+            //             }
+            //         }
+            //     }
+            // }
         },
-        security: [{ cookieAuth: [] }]
     },
     apis: ['./src/routes/api/v1/**/*.ts'],
 };
 
-fs.writeFileSync("./src/lib/static/generated.json", JSON.stringify(swaggerJsdoc(options)));
-fs.writeFileSync("./static/generated.json", JSON.stringify(swaggerJsdoc(options)));
+fs.writeFileSync("./static/swagger/swagger.json", JSON.stringify(swaggerJsdoc(options)));

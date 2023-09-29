@@ -25,7 +25,4 @@
 	:global(html) {
 		@apply bg-zinc-900 font-overpass text-stone-300;
 	}
-	:global(.scheme-container) {
-		@apply bg-zinc-900;
-	}
 </style>

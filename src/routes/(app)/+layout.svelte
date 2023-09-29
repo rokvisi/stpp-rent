@@ -25,7 +25,7 @@
 	{/if}
 
 	<!-- <a class="hidden md:inline" href="/docs/api/v1/{resources[0].resource}">Docs</a> -->
-	<a class="hidden md:inline" href="/test">Docs</a>
+	<a class="hidden md:inline" href="/swagger">Docs</a>
 </Header>
 
 {#if $sidebar}

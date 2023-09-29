@@ -34,4 +34,13 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-export const handle = sequence(apiDocumentationRouteAliasingHandle, authHandle);
+const redirectt: Handle = async ({ event, resolve }) => {
+	if (event.url.pathname.startsWith('/swagger')) {
+		throw redirect(301, "/swagger/index.html");
+	}
+
+	return await resolve(event);
+};
+
+
+export const handle = sequence(apiDocumentationRouteAliasingHandle, authHandle, redirectt);
