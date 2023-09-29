@@ -20,6 +20,15 @@ async function getUserByCredentials(username: string, passwordHash: string) {
 	}
 }
 
+/**
+ * @openapi
+ * /:
+ *   get:
+ *     description: Welcome to swagger-jsdoc!
+ *     responses:
+ *       200:
+ *         description: Returns a mysterious string.
+ */
 export async function POST({ request, cookies }) {
 	//* 1. Zod validate the request body.
 	const { username, password } = await parseRequestBodyBySchema(

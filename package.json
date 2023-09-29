@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "node swagger.js && vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -43,6 +43,7 @@
     "jose": "^4.14.6",
     "lodash-es": "^4.17.21",
     "postgres": "^3.3.5",
+    "swagger-jsdoc": "^6.2.8",
     "zod": "^3.22.2"
   }
 }
