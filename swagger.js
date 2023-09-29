@@ -5,17 +5,32 @@ const options = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Hello World',
+            title: 'STPP Rentee API',
             version: '1.0.0',
         },
+        components: {
+            schemas: {
+                authResponse: {
+                    type: "object",
+                    properties: {
+                        message: {
+                            type: "string"
+                        }
+                    }
+                }
+            },
+            securitySchemes: {
+                cookieAuth: {
+                    type: "apiKey",
+                    in: "cookie",
+                    name: "token"
+                }
+            }
+        },
+        security: [{ cookieAuth: [] }]
     },
-    apis: ['./src/routes/api/v1/**/*.ts'], // files containing annotations as above
+    apis: ['./src/routes/api/v1/**/*.ts'],
 };
 
-const openapiSpecification = swaggerJsdoc(options);
-// console.dir(JSON.stringify(openapiSpecification))
-
-
-// await fs.writeFileAsync();
-
-fs.writeFileSync("./src/lib/static/generated.json", JSON.stringify(openapiSpecification));
+fs.writeFileSync("./src/lib/static/generated.json", JSON.stringify(swaggerJsdoc(options)));
+fs.writeFileSync("./static/generated.json", JSON.stringify(swaggerJsdoc(options)));

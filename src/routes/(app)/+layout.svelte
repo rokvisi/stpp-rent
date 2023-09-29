@@ -24,7 +24,8 @@
 		<a href="/auth">Login</a>
 	{/if}
 
-	<a class="hidden md:inline" href="/docs/api/v1/{resources[0].resource}">Docs</a>
+	<!-- <a class="hidden md:inline" href="/docs/api/v1/{resources[0].resource}">Docs</a> -->
+	<a class="hidden md:inline" href="/test">Docs</a>
 </Header>
 
 {#if $sidebar}

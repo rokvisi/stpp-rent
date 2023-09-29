@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "node swagger.js && vite build",
+    "build-api": "node swagger.js",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -15,6 +16,7 @@
     "@sveltejs/adapter-vercel": "^3.0.3",
     "@sveltejs/kit": "^1.20.4",
     "@types/lodash-es": "^4.17.9",
+    "@types/swagger-ui": "^3.52.2",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "autoprefixer": "^10.4.15",
@@ -44,6 +46,8 @@
     "lodash-es": "^4.17.21",
     "postgres": "^3.3.5",
     "swagger-jsdoc": "^6.2.8",
+    "swagger-ui": "^5.9.0",
+    "swagger-ui-svelte": "^0.0.13",
     "zod": "^3.22.2"
   }
 }

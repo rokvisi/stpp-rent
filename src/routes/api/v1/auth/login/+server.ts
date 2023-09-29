@@ -22,14 +22,45 @@ async function getUserByCredentials(username: string, passwordHash: string) {
 
 /**
  * @openapi
- * /:
- *   get:
- *     description: Welcome to swagger-jsdoc!
+ * /api/v1/auth/login:
+ *   post:
+ *     description: Logs in a user (returns an http-only cookie with the auth token).
+ *     tags:
+ *       - Auth
  *     responses:
  *       200:
- *         description: Returns a mysterious string.
- */
-export async function POST({ request, cookies }) {
+ *         description: Login successful!
+ *       400: 
+ *         description: The request body is invalid. Message provided in the response body.
+ *       401: 
+ *         description: Invalid username or password. Please check your credentials and try again.
+ *       503:
+ *         description: Sorry, we are currently experiencing technical difficulties. Please try again later.
+ *     requestBody:
+ *       content:
+ *         text/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+*/
+
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwicm9sZSI6InJlbnRlZSIsImV4cCI6MTY5NjAwODQ0NSwiaWF0IjoxNjk2MDA0ODQ1LCJuYmYiOjE2OTYwMDQ4NDV9.RijnW7-8I84YsF5475hPjRHHPN6IHYqB0PK0IJtvykw
+export async function POST({ request, cookies, locals }) {
+	if (!locals.user) {
+		console.log("NO AUTH!")
+		throw error(400);
+	}
+	else {
+		console.log("AUTH AS: ", locals.user)
+	}
+
 	//* 1. Zod validate the request body.
 	const { username, password } = await parseRequestBodyBySchema(
 		request,
