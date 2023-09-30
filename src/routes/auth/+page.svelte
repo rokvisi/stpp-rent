@@ -76,7 +76,7 @@
 				/>
 				<label for="rentee">rentee <span class="text-xs italic">(buy a room)</span></label>
 			</div>
-			<div class="flex items-center gap-2">
+			<div class="mb-1 flex items-center gap-2">
 				<input
 					type="radio"
 					id="renter"
@@ -86,6 +86,19 @@
 					{...$constraints.role}
 				/>
 				<label for="renter">renter <span class="text-xs italic">(sell a room)</span></label>
+			</div>
+			<div class="flex items-center gap-2">
+				<input
+					type="radio"
+					id="admin"
+					name="role"
+					value="admin"
+					bind:group={$form.role}
+					{...$constraints.role}
+				/>
+				<label for="admin"
+					>admin <span class="text-xs italic">(only available during development)</span></label
+				>
 			</div>
 			{#if $errors.role}<span class="text-xs italic text-red-300">{$errors.role}</span>{/if}
 		</div>

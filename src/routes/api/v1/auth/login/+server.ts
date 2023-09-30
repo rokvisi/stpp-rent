@@ -6,20 +6,6 @@ import { pgUsers } from '$lib/database/schema.js';
 import { createAndSetAuthCookie, hashPassword } from '$lib/server/auth_helper.js';
 import { parseRequestBodyBySchema } from '$lib/server/api_helpers';
 
-async function getUserByCredentials(username: string, passwordHash: string) {
-	try {
-		return await db.query.pgUsers.findFirst({
-			where: and(eq(pgUsers.username, username), eq(pgUsers.password, passwordHash)),
-			columns: { username: true, role: true }
-		});
-	} catch (e) {
-		throw error(
-			503,
-			'Sorry, we are currently experiencing technical difficulties. Please try again later.'
-		);
-	}
-}
-
 /**
  * @openapi
  * /api/v1/auth/login:
@@ -87,4 +73,18 @@ export async function POST({ request, cookies, locals }) {
 	return json({
 		message: 'Login successful!'
 	});
+}
+
+async function getUserByCredentials(username: string, passwordHash: string) {
+	try {
+		return await db.query.pgUsers.findFirst({
+			where: and(eq(pgUsers.username, username), eq(pgUsers.password, passwordHash)),
+			columns: { username: true, role: true }
+		});
+	} catch (e) {
+		throw error(
+			503,
+			'Sorry, we are currently experiencing technical difficulties. Please try again later.'
+		);
+	}
 }
