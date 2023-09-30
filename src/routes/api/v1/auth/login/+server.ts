@@ -31,13 +31,13 @@ async function getUserByCredentials(username: string, passwordHash: string) {
  *       200:
  *         description: "Login successful!"
  *         content:
- *           text/json:
+ *           application/json:
  *             schema:
  *               type: "object"
  *               properties:
  *                 message:
  *                   type: "string"
- *                   default: "Login successful!"
+ *                   example: "Login successful!"
  *       400:
  *         description: "The request body is invalid. Message provided in the response body."
  *       401:
@@ -46,7 +46,7 @@ async function getUserByCredentials(username: string, passwordHash: string) {
  *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
  *     requestBody:
  *       content:
- *         text/json:
+ *         application/json:
  *           schema:
  *             type: "object"
  *             required:
@@ -55,10 +55,10 @@ async function getUserByCredentials(username: string, passwordHash: string) {
  *             properties:
  *               username:
  *                 type: "string"
- *                 default: "user1"
+ *                 example: "user1"
  *               password:
  *                 type: "string"
- *                 default: "labas123"
+ *                 example: "labas123"
  * 
 */
 export async function POST({ request, cookies, locals }) {

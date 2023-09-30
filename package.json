@@ -6,6 +6,7 @@
     "dev": "vite dev",
     "build": "node swagger.js && vite build",
     "build-api": "node swagger.js",
+    "watch-api-docs": "watch --interval=1 \"npm run build-api\" ./src/routes/api/v1",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -32,7 +33,8 @@
     "tailwindcss": "^3.3.3",
     "tslib": "^2.4.1",
     "typescript": "^5.0.0",
-    "vite": "^4.4.2"
+    "vite": "^4.4.2",
+    "watch": "^1.0.2"
   },
   "type": "module",
   "dependencies": {
