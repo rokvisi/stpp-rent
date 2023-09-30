@@ -4,20 +4,19 @@ declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			formData: Record<string, any>;
 			user: {
 				username: string;
 				role: string;
-			} | null;
+			} | undefined;
 		}
 		interface PageData {
 			user: {
 				username: string;
 				role: string;
-			} | null;
+			} | undefined;
 		}
 		// interface Platform {}
 	}
 }
 
-export {};
+export { };
