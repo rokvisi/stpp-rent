@@ -24,33 +24,43 @@ async function getUserByCredentials(username: string, passwordHash: string) {
  * @openapi
  * /api/v1/auth/login:
  *   post:
- *     description: Logs in a user (returns an http-only cookie with the auth token).
+ *     description: "Logs in a user (returns an http-only cookie with the auth token)."
  *     tags:
- *       - Auth
+ *       - "Auth"
  *     responses:
  *       200:
- *         description: Login successful!
- *       400: 
- *         description: The request body is invalid. Message provided in the response body.
- *       401: 
- *         description: Invalid username or password. Please check your credentials and try again.
+ *         description: "Login successful!"
+ *         content:
+ *           text/json:
+ *             schema:
+ *               type: "object"
+ *               properties:
+ *                 message:
+ *                   type: "string"
+ *                   default: "Login successful!"
+ *       400:
+ *         description: "The request body is invalid. Message provided in the response body."
+ *       401:
+ *         description: "Invalid username or password. Please check your credentials and try again."
  *       503:
- *         description: Sorry, we are currently experiencing technical difficulties. Please try again later.
+ *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
  *     requestBody:
  *       content:
  *         text/json:
  *           schema:
- *             type: object
+ *             type: "object"
  *             required:
- *               - username
- *               - password
+ *               - "username"
+ *               - "password"
  *             properties:
  *               username:
- *                 type: string
+ *                 type: "string"
+ *                 default: "user1"
  *               password:
- *                 type: string
+ *                 type: "string"
+ *                 default: "labas123"
+ * 
 */
-
 export async function POST({ request, cookies, locals }) {
 	//* 1. Zod validate the request body.
 	const { username, password } = await parseRequestBodyBySchema(
