@@ -4,8 +4,8 @@
 	import { getPageTitle } from '$lib/utils';
 </script>
 
-<header class="grid grid-cols-[auto_1fr_auto] bg-zinc-800 px-4 py-4 shadow md:px-12">
-	<div class="flex items-center gap-3">
+<header class="flex items-center justify-between bg-zinc-800 px-4 py-4 shadow md:px-12">
+	<div class="flex flex-1 items-center gap-3">
 		<button class="md:hidden" on:click={sidebar.toggle}
 			><svg
 				xmlns="http://www.w3.org/2000/svg"
@@ -25,8 +25,8 @@
 		</button>
 		<a href="/" class="text-mono inline-block text-lg uppercase tracking-wider">Rentee</a>
 	</div>
-	<span class="mx-auto">{getPageTitle($page.url.pathname)}</span>
-	<nav class="space-x-4 md:space-x-8">
+	<span class="flex-2">{getPageTitle($page.url.pathname)}</span>
+	<nav class="flex-1 space-x-4 text-right md:space-x-8">
 		<slot />
 	</nav>
 </header>
