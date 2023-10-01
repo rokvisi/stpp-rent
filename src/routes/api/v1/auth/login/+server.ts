@@ -3,7 +3,7 @@ import { error, json } from '@sveltejs/kit';
 import db from '$lib/server/database/db';
 import { and, eq } from 'drizzle-orm';
 import { pgUsers } from '$lib/database/schema.js';
-import { createAndSetAuthCookie, hashPassword } from '$lib/server/auth_helper.js';
+import { logUserIn, hashPassword } from '$lib/server/auth_helper.js';
 import { parseRequestBodyBySchema } from '$lib/server/api_helpers';
 
 /**
@@ -66,8 +66,16 @@ export async function POST({ request, cookies, locals }) {
 		throw error(401, 'Invalid username or password. Please check your credentials and try again.');
 	}
 
-	//* 4. Create the auth token and set the cookie header.
-	await createAndSetAuthCookie(userInfo, cookies);
+	try {
+		//* 4. Create the auth tokens and set the cookie header.
+		await logUserIn(userInfo, cookies);
+	}
+	catch {
+		throw error(
+			503,
+			'Sorry, we are currently experiencing technical difficulties. Please try again later.'
+		);
+	}
 
 	//* 5. Return the success response.
 	return json({
@@ -79,7 +87,7 @@ async function getUserByCredentials(username: string, passwordHash: string) {
 	try {
 		return await db.query.pgUsers.findFirst({
 			where: and(eq(pgUsers.username, username), eq(pgUsers.password, passwordHash)),
-			columns: { username: true, role: true }
+			columns: { id: true, username: true, role: true }
 		});
 	} catch (e) {
 		throw error(

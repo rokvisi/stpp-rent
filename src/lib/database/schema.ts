@@ -11,7 +11,8 @@ export const pgUsers = pgTable('users', {
 });
 export const pgUsersRelations = relations(pgUsers, ({ many }) => ({
 	houses: many(pgHouses),
-	contracts: many(pgContracts)
+	contracts: many(pgContracts),
+	refreshTokens: many(pgRefreshTokens)
 }))
 export type User = typeof pgUsers.$inferSelect;
 export type NewUser = typeof pgUsers.$inferInsert;
@@ -180,3 +181,21 @@ export const pgContractsRelations = relations(pgContracts, ({ one }) => ({
 export type Contract = typeof pgContracts.$inferSelect;
 export type NewContract = typeof pgContracts.$inferInsert;
 export const insertContractSchema = createInsertSchema(pgContracts);
+
+//* ----------------------------------------------------------------------
+//* ----------------------------------------------------------------------
+
+export const pgRefreshTokens = pgTable('refresh_tokens', {
+	id: serial('id').primaryKey().notNull(),
+	token: text("token").notNull(),
+	fk_user: integer("fk_user").notNull().references(() => pgUsers.id)
+});
+export const pgRefreshTokensRelations = relations(pgRefreshTokens, ({ one }) => ({
+	user: one(pgUsers, {
+		fields: [pgRefreshTokens.fk_user],
+		references: [pgUsers.id]
+	}),
+}))
+export type RefreshToken = typeof pgRefreshTokens.$inferSelect;
+export type NewRefreshToken = typeof pgRefreshTokens.$inferInsert;
+export const insertRefreshTokenSchema = createInsertSchema(pgRefreshTokens);

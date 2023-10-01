@@ -5,12 +5,14 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			user: {
+				id: number,
 				username: string;
 				role: string;
 			} | undefined;
 		}
 		interface PageData {
 			user: {
+				id: number,
 				username: string;
 				role: string;
 			} | undefined;

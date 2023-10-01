@@ -1,18 +1,56 @@
-import { PRIVATE_JWT_SERVER_SECRET } from '$env/static/private';
+import { createAccessToken, getRefreshTokenWithUserFromDB, tokenExpiration, verifyAndDecodeToken } from '$lib/server/auth_helper';
 import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
-import * as jose from 'jose';
 
 const authHandle: Handle = async ({ event, resolve }) => {
-	const jwt = event.cookies.get('token');
-	if (jwt === undefined) return await resolve(event);
-
+	//* Server looks for access-token in request: if exists and valid - OK process request;
 	try {
-		const result = await jose.jwtVerify(jwt, new TextEncoder().encode(PRIVATE_JWT_SERVER_SECRET));
+		const accessToken = event.cookies.get('accessToken');
+		const decoded = await verifyAndDecodeToken(accessToken ?? "");
 		event.locals.user = {
-			username: result.payload.username as string,
-			role: result.payload.role as string
+			id: decoded.payload.id as number,
+			username: decoded.payload.username as string,
+			role: decoded.payload.role as string
 		};
+
+		return await resolve(event)
+	} catch { /* noop */ }
+
+	//* the server looks for a refresh-token:
+	//* if exists - validate by comparing it to one stored in DB
+	//* and generate a new access-token (based on information from the refresh-token and DB)
+	//* and process the request.
+	try {
+		const refreshToken = event.cookies.get('refreshToken');
+		const decoded = await verifyAndDecodeToken(refreshToken ?? "");
+		const userId = decoded.payload.id as number;
+
+		//* Compare the given refresh token with the one in the database.
+		const existingRefreshToken = await getRefreshTokenWithUserFromDB(userId, refreshToken!);
+		if (existingRefreshToken === undefined) {
+			throw new Error("Such refresh token does not exist for the specified user.")
+		}
+
+		const userInfo = {
+			id: existingRefreshToken.user.id,
+			username: existingRefreshToken.user.username,
+			role: existingRefreshToken.user.role,
+		};
+
+		//* Create new access-token.
+		const accessToken = await createAccessToken(userInfo)
+
+		//* Set the new access token as cookie.
+		event.cookies.set('accessToken', accessToken, {
+			httpOnly: true,
+			secure: true,
+			sameSite: 'strict',
+			maxAge: tokenExpiration.access,
+			path: '/'
+		});
+
+		//* Set locals
+		event.locals.user = userInfo;
 	} catch { /* noop */ }
 
 	return await resolve(event);

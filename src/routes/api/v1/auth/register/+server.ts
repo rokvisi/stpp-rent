@@ -1,6 +1,6 @@
 import { pgUsers } from '$lib/database/schema';
 import { parseRequestBodyBySchema } from '$lib/server/api_helpers';
-import { createAndSetAuthCookie, hashPassword } from '$lib/server/auth_helper';
+import { logUserIn, hashPassword } from '$lib/server/auth_helper';
 import db from '$lib/server/database/db';
 import { authSchemas } from '$lib/zod_schemas';
 import { error, json } from '@sveltejs/kit';
@@ -61,13 +61,16 @@ export async function POST({ request, cookies }) {
 	//* 2. Hash the password for database lookup.
 	const passwordHash = await hashPassword(password);
 
+	let newUserId;
 	try {
 		//* 3. Try to insert the user. It fails if the username is already in-use.
-		await db.insert(pgUsers).values({
+		const createdUserInfo = await db.insert(pgUsers).values({
 			username,
 			password: passwordHash,
 			role
-		});
+		}).returning();
+
+		newUserId = createdUserInfo[0].id;
 	} catch (e) {
 		//? Username already in-use.
 		if (e instanceof Error && e.message.includes("duplicate key")) {
@@ -85,7 +88,7 @@ export async function POST({ request, cookies }) {
 	}
 
 	//* 4. User created. Log them in.
-	await createAndSetAuthCookie({ username, role }, cookies);
+	await logUserIn({ id: newUserId, username, role }, cookies);
 
 	//* 5. Return success response.
 	return json({
