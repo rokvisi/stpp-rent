@@ -22,6 +22,9 @@ const config = {
 		}),
 		prerender: {
 			entries: ['*', ...getApiDocsPages()]
+		},
+		csrf: {
+			checkOrigin: false
 		}
 	}
 };

@@ -1,5 +1,5 @@
 import { createAccessToken, getRefreshTokenWithUserFromDB, tokenExpiration, verifyAndDecodeToken } from '$lib/server/auth_helper';
-import type { Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 const authHandle: Handle = async ({ event, resolve }) => {
@@ -56,4 +56,21 @@ const authHandle: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-export const handle = sequence(authHandle);
+const protectedPagesHandle: Handle = async ({ event, resolve }) => {
+	//* Renter
+	if (event.url.pathname.startsWith("/renter")) {
+		if (event.locals.user?.role !== "renter") {
+			throw redirect(303, "/auth")
+		}
+	}
+
+	//* Rentee
+	//TODO: Implement
+
+	//* Admin
+	//TODO: Implement
+
+	return await resolve(event);
+}
+
+export const handle = sequence(authHandle, protectedPagesHandle);

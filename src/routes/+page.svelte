@@ -10,10 +10,9 @@
 		<div class="flex flex-col rounded border p-2">
 			<div>
 				<p>House information</p>
-				<p>Name: {house.name}</p>
-				<p>Description: {house.description}</p>
-				<p>City: {house.city}</p>
-				<p>Street: {house.street}</p>
+				<p>{house.name}</p>
+				<p>{house.region}/{house.district}</p>
+				<img src={house.image_url} alt="banner" />
 				<p>RenterID: {house.fk_renter}</p>
 			</div>
 			<hr />

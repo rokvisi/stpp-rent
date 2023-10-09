@@ -28,6 +28,7 @@ export const pgHouses = pgTable('houses', {
 	region: text('region').notNull(),
 	district: text('district').notNull(),
 	image_url: text('image_url').notNull(),
+	wifi_speed: integer("wifi_speed"),
 	location_description: text('location_description').notNull(),
 	fk_renter: integer("fk_renter").notNull().references(() => pgUsers.id)
 });

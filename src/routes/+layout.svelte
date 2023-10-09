@@ -26,6 +26,8 @@
 <div class="relative grid min-h-screen grid-rows-[auto_1fr_auto] overflow-hidden">
 	<Header>
 		{#if $page.data.user}
+			<a href="/renter">Dashboard</a>
+
 			<div class="inline-flex gap-2">
 				<span
 					>{$page.data.user.username}<span class="text-xs italic">({$page.data.user.role})</span
