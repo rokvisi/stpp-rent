@@ -1,4 +1,4 @@
-import db from "$lib/server/database/db";
+import db from "$lib/server/db";
 
 export async function load() {
     const houses = await db.query.pgHouses.findMany({

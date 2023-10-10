@@ -1,5 +1,5 @@
 import { pgUsers } from '$lib/database/schema';
-import db from '$lib/server/database/db';
+import db from '$lib/server/db';
 import { error, json } from '@sveltejs/kit';
 
 export async function GET() {

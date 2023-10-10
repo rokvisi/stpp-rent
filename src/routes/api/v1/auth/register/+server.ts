@@ -1,7 +1,7 @@
 import { pgUsers } from '$lib/database/schema';
 import { parseRequestBodyBySchema } from '$lib/server/api_helpers';
 import { logUserIn, hashPassword } from '$lib/server/auth_helper';
-import db from '$lib/server/database/db';
+import db from '$lib/server/db';
 import { authSchemas } from '$lib/zod_schemas';
 import { error, json } from '@sveltejs/kit';
 

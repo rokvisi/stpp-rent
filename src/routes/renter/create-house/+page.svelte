@@ -6,7 +6,7 @@
 	const { form, errors, enhance, message, submitting, constraints, reset } = superForm(
 		data.authForm,
 		{
-			validators: houseSchemas.create,
+			validators: houseSchemas.post,
 			taintedMessage: null,
 			resetForm: false,
 			onError({ result }) {

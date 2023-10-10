@@ -1,5 +1,5 @@
 import { insertUserSchema, pgUsers } from '$lib/database/schema.js';
-import db from '$lib/server/database/db.js';
+import db from '$lib/server/db.js';
 
 export async function POST({ request }) {
 	const requestParaseResult = insertUserSchema.safeParse(await request.json());

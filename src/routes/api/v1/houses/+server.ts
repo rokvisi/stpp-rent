@@ -1,36 +1,48 @@
 import { pgHouses } from '$lib/database/schema.js';
-import db from '$lib/server/database/db.js';
+import db from '$lib/server/db.js';
 import { houseSchemas } from '$lib/zod_schemas.js';
 import { actionResult, superValidate } from 'sveltekit-superforms/server';
-import { put, del } from "@vercel/blob";
-import { eq } from 'drizzle-orm';
 import { error, json } from '@sveltejs/kit';
-
-async function getRequestFormData(request: Request) {
-    try {
-        return await request.formData();
-    } catch (e) {
-        return null; //? Invalid request body or somehow already consumed.
-    }
-}
-
-async function uploadImageToVercel(filename: string, file: File) {
-    try {
-        const { url } = await put(filename, file, { access: "public" });
-        return url;
-    }
-    catch {
-        return null; //? Service unavailable or broken file.
-    }
-}
+import { getRequestFormData, uploadImageToVercel } from '$lib/server/helpers';
 
 /**
  * @openapi
  * /api/v1/houses:
  *   post:
- *     description: "Creates a house listing (requires to be logged-in as a renter)"
+ *     description: "Creates a house listing (requires to be logged-in as a renter)."
  *     tags:
  *       - "Houses"
+ *     requestBody:
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: "object"
+ *             required:
+ *               - "name"
+ *               - "region"
+ *               - "district"
+ *               - "location_description"
+ *               - "wifi_speed"
+ *               - "image"
+ *             properties:
+ *               name:
+ *                 type: "string"
+ *                 example: "Butas Kaune 1"
+ *               region:
+ *                 type: "string"
+ *                 example: "Kaunas"
+ *               district:
+ *                 type: "string"
+ *                 example: "┼áilainiai"
+ *               location_description:
+ *                 type: "string"
+ *                 example: "Arti parduotuv─ù."
+ *               wifi_speed:
+ *                 type: "integer"
+ *                 example: "20"
+ *               image:
+ *                 type: "string"
+ *                 format: "binary"
  *     responses:
  *       200:
  *         description: "Successfully created listing!"
@@ -54,37 +66,6 @@ async function uploadImageToVercel(filename: string, file: File) {
  *         description: "Only renters can create houses. Please login."
  *       503:
  *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
- *     requestBody:
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: "object"
- *             required:
- *               - "name"
- *               - "region"
- *               - "district"
- *               - "location_description"
- *               - "wifi_speed"
- *               - "image"
- *             properties:
- *               name:
- *                 type: "string"
- *                 example: "Butas Kaune 1"
- *               region:
- *                 type: "string"
- *                 example: "Kaunas"
- *               district:
- *                 type: "string"
- *                 example: "Šilainiai"
- *               location_description:
- *                 type: "string"
- *                 example: "Arti parduotuvė."
- *               wifi_speed:
- *                 type: "integer"
- *                 example: "20"
- *               image:
- *                 type: "string"
- *                 format: "binary"
  * 
 */
 export async function POST({ request, locals }) {
@@ -96,7 +77,7 @@ export async function POST({ request, locals }) {
     if (formData === null) return actionResult('error', "The request formData is invalid. Please check your data and try again.", 400);
 
     //* Validate the form data.
-    const form = await superValidate(formData, houseSchemas.create);
+    const form = await superValidate(formData, houseSchemas.post);
     if (!form.valid) return actionResult('failure', { form }, 400);
 
     //* Extract the image
@@ -133,7 +114,7 @@ export async function POST({ request, locals }) {
  * @openapi
  * /api/v1/houses:
  *   get:
- *     description: "Gets all house listings"
+ *     description: "Gets all house listings."
  *     tags:
  *       - "Houses"
  *     responses:
@@ -148,13 +129,13 @@ export async function POST({ request, locals }) {
  *                 properties:
  *                   name:
  *                     type: "string"
- *                     example: "BAHAR─░YE ERASMUS HOUSE"
+ *                     example: "BAHARİYE ERASMUS HOUSE"
  *                   region:
  *                     type: "string"
- *                     example: "KADIK├ûY"
+ *                     example: "KADIKÖY"
  *                   district:
  *                     type: "string"
- *                     example: "OSMANA─₧A"
+ *                     example: "OSMANAĞA"
  *                   location_description:
  *                     type: "string"
  *                     example: "*omitted*"
@@ -206,122 +187,4 @@ export async function GET({ url }) {
     catch {
         throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
     }
-}
-
-/**
- * @openapi
- * /api/v1/houses:
- *   put:
- *     description: "Update a house listing."
- *     tags:
- *       - "Houses"
- *     responses:
- *       200:
- *         description: "Updated successfully!"
- *       503:
- *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
- * 
-*/
-export async function PUT({ request, locals }) {
-    //TODO: Implement
-    return new Response();
-}
-
-/**
- * @openapi
- * /api/v1/houses:
- *   delete:
- *     description: "Deletes a house listing (requires to be logged-in as a renter)"
- *     tags:
- *       - "Houses"
- *     responses:
- *       200:
- *         description: "Successfully deleted listing!"
- *         content:
- *           application/json:
- *             schema:
- *               type: "object"
- *               properties:
- *                 type:
- *                   type: "string"
- *                   example: "success"
- *                 status:
- *                   type: "number"
- *                   example: 200
- *                 data:
- *                   type: "string"
- *                   example: "*omitted*"
- *       400:
- *         description: "The request formData is invalid. Please check your data and try again."
- *       401:
- *         description: "User was not logged-in as a renter or is not the one that created the specified house."
- *       404:
- *         description: "The house with the specified id does not exist."
- *       503:
- *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
- *     requestBody:
- *       content:
- *         multipart/form-data:
- *           schema:
- *             type: "object"
- *             required:
- *               - "id"
- *             properties:
- *               id:
- *                 type: "integer"
- *                 example: "1"
- * 
-*/
-export async function DELETE({ request, locals }) {
-    //* Authenticated as a renter.
-    if (locals.user?.role !== "renter") return actionResult('error', "Only renters can delete houses. Please login.", 401);
-
-    //* Got form data in the request.
-    const formData = await getRequestFormData(request);
-    if (formData === null) return actionResult('error', "The request formData is invalid. Please check your data and try again.", 400);
-
-    //* Validate the form data.
-    const form = await superValidate(formData, houseSchemas.delete);
-    if (!form.valid) return actionResult('failure', { form }, 400);
-
-    //* Extract the data.
-    const { id } = form.data;
-
-    //* Get the house specified in the body id.
-    let dbResult = undefined;
-    try {
-        dbResult = await db.query.pgHouses.findFirst({
-            where: eq(pgHouses.id, id),
-            columns: {
-                fk_renter: true,
-                image_url: true,
-            }
-        })
-    }
-    catch {
-        return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
-    }
-    if (dbResult === undefined) return actionResult('error', "The house with the specified id does not exist.", 404);
-
-    //* Check if the logged-in user is the one who created the listing.
-    if (dbResult.fk_renter !== locals.user.id) return actionResult('error', "The specified house was created by a different renter.", 401);
-
-    //* Delete the listing.
-    try {
-        await db.delete(pgHouses).where(eq(pgHouses.id, id));
-    }
-    catch {
-        return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
-    }
-
-    //* Delete the uploaded image.
-    try {
-        await del(dbResult.image_url);
-    }
-    catch {
-        //TODO: By this point the house is deleted. Error message might be misleading.
-        return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
-    }
-
-    return actionResult('success', { form }, 200);
 }

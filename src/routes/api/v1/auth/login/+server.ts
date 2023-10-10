@@ -1,6 +1,6 @@
 import { authSchemas } from '$lib/zod_schemas.js';
 import { error, json } from '@sveltejs/kit';
-import db from '$lib/server/database/db';
+import db from '$lib/server/db';
 import { and, eq } from 'drizzle-orm';
 import { pgUsers } from '$lib/database/schema.js';
 import { logUserIn, hashPassword } from '$lib/server/auth_helper.js';

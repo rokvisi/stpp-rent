@@ -3,6 +3,6 @@ import { superValidate } from 'sveltekit-superforms/server';
 
 export async function load() {
     return {
-        authForm: await superValidate(houseSchemas.create)
+        authForm: await superValidate(houseSchemas.post)
     };
 }

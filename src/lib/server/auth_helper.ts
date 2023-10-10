@@ -1,7 +1,7 @@
 import { PRIVATE_JWT_SERVER_SECRET } from '$env/static/private';
 import type { Cookies } from '@sveltejs/kit';
 import * as jose from 'jose';
-import db from './database/db';
+import db from './db';
 import { pgRefreshTokens } from '$lib/database/schema';
 import { and, eq } from 'drizzle-orm';
 
