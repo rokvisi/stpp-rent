@@ -30,3 +30,16 @@ export const houseSchemas = {
 		//! Image is not handled since it is a file. Make sure to handle it separately.
 	})
 }
+
+export const roomSchemas = {
+	post: z.object({
+		number: z.number().positive("Must be positive."),
+		price: z.number().positive("Must be positive."),
+		description: z.string().min(3, 'Must be at least 3 characters long.'),
+	}),
+	patch: z.object({
+		number: z.number().positive("Must be positive.").optional(),
+		price: z.number().positive("Must be positive.").optional(),
+		description: z.string().min(3, 'Must be at least 3 characters long.').optional(),
+	})
+}

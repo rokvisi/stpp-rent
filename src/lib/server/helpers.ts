@@ -7,7 +7,6 @@ export function atLeastOneFieldUpdated(obj: any) {
     return false;
 }
 
-
 export async function getRequestFormData(request: Request) {
     try {
         return await request.formData();
@@ -28,6 +27,7 @@ export async function uploadImageToVercel(filename: string, file: File) {
 
 export async function deleteImageFromVercel(filename: string) {
     try {
+        console.log("Trying to delete image.")
         await del(filename);
         return true;
     }

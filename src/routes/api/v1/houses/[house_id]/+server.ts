@@ -5,9 +5,31 @@ import { actionResult, superValidate } from 'sveltekit-superforms/server';
 import { eq } from 'drizzle-orm';
 import { atLeastOneFieldUpdated, updateImageOrNothing, getRequestFormData, deleteImageFromVercel } from '$lib/server/helpers';
 import type { z } from 'zod';
-import { json } from '@sveltejs/kit';
+import { error, json } from '@sveltejs/kit';
 
-async function getHouseById(id: number) {
+async function getHouseByIdFull(id: number) {
+    try {
+        const result = await db.query.pgHouses.findFirst({
+            where(fields, operators) {
+                return operators.eq(fields.id, id)
+            },
+            columns: {
+                name: true,
+                region: true,
+                district: true,
+                location_description: true,
+                wifi_speed: true,
+                image_url: true,
+            },
+        })
+        return result ?? null;
+    }
+    catch {
+        return undefined;
+    }
+}
+
+async function getHouseByIdPartial(id: number) {
     try {
         const result = await db.query.pgHouses.findFirst({
             where(fields, operators) {
@@ -26,8 +48,6 @@ async function getHouseById(id: number) {
 }
 
 async function updateHouseWithId(id: number, data: z.infer<typeof houseSchemas.patch> & { image_url?: string | undefined }) {
-    console.log("New image in dbUpdate:", data.image_url);
-
     //* Check if at least 1 updated field exists
     try {
         await db.update(pgHouses).set(data).where(eq(pgHouses.id, id));
@@ -36,6 +56,63 @@ async function updateHouseWithId(id: number, data: z.infer<typeof houseSchemas.p
     catch (e) {
         return false;
     }
+}
+
+/**
+ * @openapi
+ * /api/v1/houses/{id}:
+ *   get:
+ *     description: "Gets a house listing."
+ *     tags:
+ *       - "Houses"
+ *     responses:
+ *       200:
+ *         description: "Returns a list of houses."
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: "object"
+ *               properties:
+ *                 name:
+ *                   type: "string"
+ *                   example: "BAHAR─░YE ERASMUS HOUSE"
+ *                 region:
+ *                   type: "string"
+ *                   example: "KADIK├ûY"
+ *                 district:
+ *                   type: "string"
+ *                   example: "OSMANA─₧A"
+ *                 location_description:
+ *                   type: "string"
+ *                   example: "*omitted*"
+ *                 wifi_speed:
+ *                   type: "number"
+ *                   example: 50
+ *                 image_url:
+ *                   type: "string"
+ *                   example: "https://ghryg4oekbndllfk.public.blob.vercel-storage.com/banner-cIMQn3oWYmBK2lWw1mtF19WSbxc7ec.webp"
+ *       404:
+ *         description: "The house with the specified id does not exist."
+ *       503:
+ *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
+ *     parameters:
+ *       - in: "path"
+ *         name: "id"
+ *         required: true
+ *         schema:
+ *           type: "integer"
+ *           description: "The house ID."
+ * 
+*/
+export async function GET({ params }) {
+    //TODO: Add more info about the house. (renter info, calculated available rooms, etc.)
+
+    const houseId = Number(params.house_id) ?? -1;
+    const dbHouse = await getHouseByIdFull(houseId);
+    if (dbHouse === null) throw error(404, "The house with the specified id does not exist.");
+    if (dbHouse === undefined) throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
+
+    return json(dbHouse);
 }
 
 /**
@@ -116,8 +193,8 @@ export async function PATCH({ request, locals, params }) {
     if (!form.valid) return actionResult('failure', { form }, 400);
 
     //* Find the house
-    const houseId = Number(params.id) ?? -1;
-    const dbHouse = await getHouseById(houseId);
+    const houseId = Number(params.house_id) ?? -1;
+    const dbHouse = await getHouseByIdPartial(houseId);
     if (dbHouse === null) return actionResult('error', "The house with the specified id does not exist.", 404);
     if (dbHouse === undefined) return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
 
@@ -173,30 +250,30 @@ export async function PATCH({ request, locals, params }) {
 */
 export async function DELETE({ locals, params }) {
     //* Authenticated as a renter.
-    if (locals.user?.role !== "renter") return actionResult('error', "Only renters can delete houses. Please login.", 401);
+    if (locals.user?.role !== "renter") throw error(401, "Only renters can delete houses. Please login.");
 
     //* Find the house
-    const houseId = Number(params.id) ?? -1;
-    const dbHouse = await getHouseById(houseId);
-    if (dbHouse === null) return actionResult('error', "The house with the specified id does not exist.", 404);
-    if (dbHouse === undefined) return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
+    const houseId = Number(params.house_id) ?? -1;
+    const dbHouse = await getHouseByIdPartial(houseId);
+    if (dbHouse === null) throw error(404, "The house with the specified id does not exist.");
+    if (dbHouse === undefined) throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
 
     //* Check if the logged-in user is the one that created it.
-    if (dbHouse.fk_renter !== locals.user.id) return actionResult('error', "The specified house was created by a different renter.", 401);
+    if (dbHouse.fk_renter !== locals.user.id) throw error(401, "The specified house was created by a different renter.");
 
     //* Delete the listing.
     try {
         await db.delete(pgHouses).where(eq(pgHouses.id, houseId));
     }
-    catch {
-        return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
+    catch (e) {
+        throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
     }
 
     //* Delete the uploaded image.
     const imageDelResult = await deleteImageFromVercel(dbHouse.image_url);
     if (imageDelResult === false) {
         //TODO: By this point the house is deleted. Error message might be misleading.
-        return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
+        throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
     }
 
     return json({

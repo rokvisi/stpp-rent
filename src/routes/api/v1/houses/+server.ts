@@ -5,6 +5,27 @@ import { actionResult, superValidate } from 'sveltekit-superforms/server';
 import { error, json } from '@sveltejs/kit';
 import { getRequestFormData, uploadImageToVercel } from '$lib/server/helpers';
 
+async function getHouses(limit: number, offset: number) {
+    try {
+        return await db.query.pgHouses.findMany({
+            columns: {
+                id: true,
+                name: true,
+                region: true,
+                district: true,
+                location_description: true,
+                wifi_speed: true,
+                image_url: true,
+            },
+            limit,
+            offset
+        })
+    }
+    catch {
+        return undefined;
+    }
+}
+
 /**
  * @openapi
  * /api/v1/houses:
@@ -117,6 +138,19 @@ export async function POST({ request, locals }) {
  *     description: "Gets all house listings."
  *     tags:
  *       - "Houses"
+ *     parameters:
+ *       - in: "query"
+ *         name: "offset"
+ *         description: "The number of houses to skip."
+ *         schema:
+ *           type: "integer"
+ *           default: 0
+ *       - in: "query"
+ *         name: "limit"
+ *         description: "The numbers of houses to return"
+ *         schema:
+ *           type: "integer"
+ *           default: 10
  *     responses:
  *       200:
  *         description: "Returns a list of houses."
@@ -127,6 +161,9 @@ export async function POST({ request, locals }) {
  *               items:
  *                 type: "object"
  *                 properties:
+ *                   id:
+ *                     type: "number"
+ *                     example: 1
  *                   name:
  *                     type: "string"
  *                     example: "BAHARİYE ERASMUS HOUSE"
@@ -145,46 +182,20 @@ export async function POST({ request, locals }) {
  *                   image_url:
  *                     type: "string"
  *                     example: "https://ghryg4oekbndllfk.public.blob.vercel-storage.com/banner-cIMQn3oWYmBK2lWw1mtF19WSbxc7ec.webp"
+ *       404:
+ *         description: "No houses exist."
  *       503:
  *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
- *     parameters:
- *       - in: "query"
- *         name: "offset"
- *         description: "The number of houses to skip."
- *         schema:
- *           type: "integer"
- *           default: 0
- *       - in: "query"
- *         name: "limit"
- *         description: "The numbers of houses to return"
- *         schema:
- *           type: "integer"
- *           default: 10
  * 
 */
 export async function GET({ url }) {
     //TODO: Add more info about the house. (renter info, calculated available rooms, etc.)
-
     const limit = Number(url.searchParams.get('limit')) || 10;
     const offset = Number(url.searchParams.get('offset')) || 0;
 
-    try {
-        const res = await db.query.pgHouses.findMany({
-            columns: {
-                name: true,
-                region: true,
-                district: true,
-                location_description: true,
-                wifi_speed: true,
-                image_url: true,
-            },
-            limit,
-            offset
-        })
+    const dbHouses = await getHouses(limit, offset);
+    if (dbHouses === undefined) throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
+    if (dbHouses.length === 0) throw error(404, 'No houses exist.');
 
-        return json(res);
-    }
-    catch {
-        throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
-    }
+    return json(dbHouses);
 }

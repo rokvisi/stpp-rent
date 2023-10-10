@@ -30,7 +30,7 @@ export const pgHouses = pgTable('houses', {
 	image_url: text('image_url').notNull(),
 	wifi_speed: integer("wifi_speed"),
 	location_description: text('location_description').notNull(),
-	fk_renter: integer("fk_renter").notNull().references(() => pgUsers.id)
+	fk_renter: integer("fk_renter").notNull().references(() => pgUsers.id, { onDelete: 'cascade' })
 });
 export const pgHousesRelations = relations(pgHouses, ({ one, many }) => ({
 	renter: one(pgUsers, {
@@ -51,7 +51,7 @@ export const insertHouseSchema = createInsertSchema(pgHouses);
 export const pgHouseLocationNotes = pgTable('house_location_notes', {
 	id: serial('id').primaryKey().notNull(),
 	note: text('note').notNull(),
-	fk_house: integer("fk_house").notNull().references(() => pgHouses.id)
+	fk_house: integer("fk_house").notNull().references(() => pgHouses.id, { onDelete: 'cascade' })
 });
 export const pgHouseLocationNotesRelations = relations(pgHouseLocationNotes, ({ one }) => ({
 	house: one(pgHouses, {
@@ -70,7 +70,8 @@ export const pgRooms = pgTable('rooms', {
 	id: serial('id').primaryKey().notNull(),
 	number: integer('number').notNull(),
 	description: text('description').notNull(),
-	fk_house: integer("fk_house").notNull().references(() => pgHouses.id)
+	price: integer('price').notNull(),
+	fk_house: integer("fk_house").notNull().references(() => pgHouses.id, { onDelete: 'cascade' })
 });
 export const pgRoomsRelations = relations(pgRooms, ({ one, many }) => ({
 	contracts: many(pgContracts),
@@ -91,7 +92,7 @@ export const insertRoomSchema = createInsertSchema(pgRooms);
 export const pgRoomNotes = pgTable('room_notes', {
 	id: serial('id').primaryKey().notNull(),
 	note: text('note').notNull(),
-	fk_room: integer("fk_room").notNull().references(() => pgRooms.id)
+	fk_room: integer("fk_room").notNull().references(() => pgRooms.id, { onDelete: 'cascade' })
 });
 export const pgRoomNotesRelations = relations(pgRoomNotes, ({ one }) => ({
 	room: one(pgRooms, {
@@ -109,7 +110,7 @@ export const insertRoomNoteSchema = createInsertSchema(pgRoomNotes);
 export const pgRoomImages = pgTable('room_images', {
 	id: serial('id').primaryKey().notNull(),
 	url: text('url').notNull(),
-	fk_room: integer("fk_room").notNull().references(() => pgRooms.id)
+	fk_room: integer("fk_room").notNull().references(() => pgRooms.id, { onDelete: 'cascade' })
 });
 export const pgRoomImagesRelations = relations(pgRoomImages, ({ one }) => ({
 	room: one(pgRooms, {
@@ -128,7 +129,7 @@ export const insertRoomImageSchema = createInsertSchema(pgRoomImages);
 export const pgCommonAreas = pgTable('common_areas', {
 	id: serial('id').primaryKey().notNull(),
 	name: text('name').notNull(),
-	fk_house: integer("fk_house").notNull().references(() => pgHouses.id)
+	fk_house: integer("fk_house").notNull().references(() => pgHouses.id, { onDelete: 'cascade' })
 });
 export const pgCommonAreasRelations = relations(pgCommonAreas, ({ one, many }) => ({
 	house: one(pgHouses, {
@@ -147,7 +148,7 @@ export const insertCommonAreaSchema = createInsertSchema(pgCommonAreas);
 export const pgCommonAreaImages = pgTable('common_area_images', {
 	id: serial('id').primaryKey().notNull(),
 	url: text('url').notNull(),
-	fk_common_area: integer("fk_common_area").notNull().references(() => pgCommonAreas.id)
+	fk_common_area: integer("fk_common_area").notNull().references(() => pgCommonAreas.id, { onDelete: 'cascade' })
 });
 export const pgCommonAreaImagesRelations = relations(pgCommonAreaImages, ({ one }) => ({
 	commonArea: one(pgCommonAreas, {
@@ -166,8 +167,8 @@ export const pgContracts = pgTable('contracts', {
 	id: serial('id').primaryKey().notNull(),
 	start_date: timestamp('start_date').defaultNow().notNull(),
 	end_date: timestamp('end_date'),
-	fk_room: integer("fk_room").notNull().references(() => pgRooms.id),
-	fk_rentee: integer("fk_rentee").notNull().references(() => pgUsers.id)
+	fk_room: integer("fk_room").notNull().references(() => pgRooms.id, { onDelete: 'cascade' }),
+	fk_rentee: integer("fk_rentee").notNull().references(() => pgUsers.id, { onDelete: 'cascade' })
 });
 export const pgContractsRelations = relations(pgContracts, ({ one }) => ({
 	rentee: one(pgUsers, {
@@ -189,7 +190,7 @@ export const insertContractSchema = createInsertSchema(pgContracts);
 export const pgRefreshTokens = pgTable('refresh_tokens', {
 	id: serial('id').primaryKey().notNull(),
 	token: text("token").notNull(),
-	fk_user: integer("fk_user").notNull().references(() => pgUsers.id)
+	fk_user: integer("fk_user").notNull().references(() => pgUsers.id, { onDelete: 'cascade' })
 });
 export const pgRefreshTokensRelations = relations(pgRefreshTokens, ({ one }) => ({
 	user: one(pgUsers, {
