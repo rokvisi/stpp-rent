@@ -51,7 +51,7 @@ export const actions = {
 	},
 	logout: async ({ fetch }) => {
 		const res = await fetch('/api/v1/auth/logout', {
-			method: 'POST'
+			method: 'DELETE'
 		});
 		if (!res.ok) {
 			throw error(400);

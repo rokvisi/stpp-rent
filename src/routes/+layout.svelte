@@ -26,7 +26,9 @@
 <div class="relative grid min-h-screen grid-rows-[auto_1fr_auto] overflow-hidden">
 	<Header>
 		{#if $page.data.user}
-			<a href="/renter">Dashboard</a>
+			{#if $page.data.user.role === 'renter'}
+				<a class="inline-block" href="/renter">Dashboard</a>
+			{/if}
 
 			<div class="inline-flex gap-2">
 				<span

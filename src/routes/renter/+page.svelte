@@ -1,11 +1,19 @@
 <script lang="ts">
+	import HouseCard from '$lib/components/HouseCard.svelte';
+
+	export let data;
+	$: houses = data.houses;
 </script>
 
 <div class="flex flex-col gap-2">
+	<h1 class="pb-4 text-5xl">My house listings</h1>
+	<a class="inline-block rounded border p-2" href="/renter/create-house">Create new house listing</a
+	>
 	<div>
-		<h1>My houses</h1>
-		<p>TODO!</p>
+		<div class="flex flex-col gap-4">
+			{#each houses as house (house.id)}
+				<HouseCard {house} />
+			{/each}
+		</div>
 	</div>
-
-	<a class="rounded border p-2" href="/renter/create-house">Create new house listing</a>
 </div>

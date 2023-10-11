@@ -63,7 +63,7 @@ async function updateRoomWithHouseAndRoomId(houseId: number, roomId: number, dat
  *   get:
  *     description: "Gets a room in a house."
  *     tags:
- *       - "Rooms by house id"
+ *       - "Rooms by {house_id}"
  *     parameters:
  *       - in: "path"
  *         name: "house_id"
@@ -121,7 +121,7 @@ export async function GET({ params }) {
  *   patch:
  *     description: "Updates a room in a house. (requires to be logged-in as a renter)"
  *     tags:
- *       - "Rooms by house id"
+ *       - "Rooms by {house_id}"
  *     parameters:
  *       - in: "path"
  *         name: "house_id"
@@ -214,7 +214,7 @@ export async function PATCH({ request, locals, params }) {
  *   delete:
  *     description: "Deletes a room in a house. (requires to be logged-in as a renter)"
  *     tags:
- *       - "Rooms by house id"
+ *       - "Rooms by {house_id}"
  *     parameters:
  *       - in: "path"
  *         name: "house_id"

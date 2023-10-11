@@ -9,7 +9,7 @@ import { error, json } from '@sveltejs/kit';
  * @openapi
  * /api/v1/auth/register:
  *   post:
- *     description: "Registers a user (returns an http-only cookie with the auth token)."
+ *     description: "Registers a user (returns http-only cookies with the access and refresh tokens)."
  *     tags:
  *       - "Auth"
  *     requestBody:
@@ -24,7 +24,7 @@ import { error, json } from '@sveltejs/kit';
  *             properties:
  *               username:
  *                 type: "string"
- *                 example: "user1"
+ *                 example: "user3"
  *               password:
  *                 type: "string"
  *                 example: "labas123"
@@ -33,7 +33,7 @@ import { error, json } from '@sveltejs/kit';
  *                 example: "renter"
  *     responses:
  *       200:
- *         description: "Registration successful."
+ *         description: "Registration successful!"
  *         content:
  *           application/json:
  *             schema:
@@ -41,9 +41,9 @@ import { error, json } from '@sveltejs/kit';
  *               properties:
  *                 message:
  *                   type: "string"
- *                   example: "Registration successful!"
+ *                   default: "Registration successful!"
  *       400:
- *         description: "The request body is invalid. Message provided in the response body."
+ *         description: "The data provided in the request body is invalid. Please check your registration information and try again."
  *       409:
  *         description: "The requested username is already taken. Please choose a different username."
  *       503:
@@ -74,17 +74,11 @@ export async function POST({ request, cookies }) {
 	} catch (e) {
 		//? Username already in-use.
 		if (e instanceof Error && e.message.includes("duplicate key")) {
-			throw error(
-				409,
-				'The requested username is already taken. Please choose a different username.'
-			);
+			throw error(409, 'The requested username is already taken. Please choose a different username.');
 		}
 
 		//? Generic database error.
-		throw error(
-			503,
-			'Sorry, we are currently experiencing technical difficulties. Please try again later.'
-		);
+		throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
 	}
 
 	//* 4. User created. Log them in.

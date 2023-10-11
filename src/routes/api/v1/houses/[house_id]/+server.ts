@@ -62,12 +62,19 @@ async function updateHouseWithId(id: number, data: z.infer<typeof houseSchemas.p
  * @openapi
  * /api/v1/houses/{id}:
  *   get:
- *     description: "Gets a house listing."
+ *     description: "Gets a single house."
  *     tags:
  *       - "Houses"
+ *     parameters:
+ *       - in: "path"
+ *         name: "id"
+ *         required: true
+ *         schema:
+ *           type: "integer"
+ *           description: "The house ID."
  *     responses:
  *       200:
- *         description: "Returns a list of houses."
+ *         description: "Gets a single house."
  *         content:
  *           application/json:
  *             schema:
@@ -95,13 +102,6 @@ async function updateHouseWithId(id: number, data: z.infer<typeof houseSchemas.p
  *         description: "The house with the specified id does not exist."
  *       503:
  *         description: "Sorry, we are currently experiencing technical difficulties. Please try again later."
- *     parameters:
- *       - in: "path"
- *         name: "id"
- *         required: true
- *         schema:
- *           type: "integer"
- *           description: "The house ID."
  * 
 */
 export async function GET({ params }) {

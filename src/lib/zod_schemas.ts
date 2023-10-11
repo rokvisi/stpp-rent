@@ -43,3 +43,30 @@ export const roomSchemas = {
 		description: z.string().min(3, 'Must be at least 3 characters long.').optional(),
 	})
 }
+
+export const roomNoteSchemas = {
+	post: z.object({
+		note: z.string().min(3, 'Must be at least 3 characters long.'),
+	}),
+	patch: z.object({
+		note: z.string().min(3, 'Must be at least 3 characters long.'),
+	})
+}
+
+export const houseNoteSchemas = {
+	post: z.object({
+		note: z.string().min(3, 'Must be at least 3 characters long.'),
+	}),
+	patch: z.object({
+		note: z.string().min(3, 'Must be at least 3 characters long.'),
+	})
+}
+
+export const commonAreaSchemas = {
+	post: z.object({
+		name: z.string().min(3, 'Must be at least 3 characters long.'),
+	}),
+	patch: z.object({
+		name: z.string().min(3, 'Must be at least 3 characters long.'),
+	})
+}

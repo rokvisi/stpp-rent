@@ -3,8 +3,8 @@ import { json } from '@sveltejs/kit';
 /**
  * @openapi
  * /api/v1/auth/logout:
- *   post:
- *     description: "Deletes the user auth token cookie."
+ *   delete:
+ *     description: "Logs out the user (deletes the access and refresh token cookies)."
  *     tags:
  *       - "Auth"
  *     responses:
@@ -17,12 +17,13 @@ import { json } from '@sveltejs/kit';
  *               properties:
  *                 message:
  *                   type: "string"
- *                   example: "Log out successful!"
+ *                   default: "Log out successful!"
  * 
 */
-export async function POST({ cookies }) {
+export async function DELETE({ cookies }) {
 	cookies.delete('accessToken', { path: '/' });
 	cookies.delete('refreshToken', { path: '/' });
+
 	return json({
 		message: 'Log out successful!'
 	})
