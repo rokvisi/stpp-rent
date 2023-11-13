@@ -3,13 +3,9 @@
 	import FontPreload from '$lib/components/FontPreload.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import { beforeNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
 	import MainContent from '$lib/components/MainContent.svelte';
 	import { sidebar } from '$lib/stores/sidebar';
 	import Sidebar from '$lib/components/Sidebar.svelte';
-
-	beforeNavigate(sidebar.hide);
 </script>
 
 <svelte:head>
