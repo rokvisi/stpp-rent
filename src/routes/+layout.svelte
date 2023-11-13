@@ -14,12 +14,7 @@
 <svelte:head>
 	<title>Rentee</title>
 	<FontPreload
-		paths={[
-			'/fonts/overpass/overpass-v13-latin-regular.woff2',
-			'/fonts/overpass/overpass-v13-latin-600.woff2',
-			'/fonts/overpass/overpass-v13-latin-700.woff2',
-			'/fonts/overpass/overpass-mono-v16-latin-regular.woff2'
-		]}
+		paths={['/fonts/geist/GeistVariableVF.woff2', '/fonts/geist/GeistMonoVariableVF.woff2']}
 	/>
 </svelte:head>
 
@@ -63,6 +58,6 @@
 
 <style lang="postcss">
 	:global(html) {
-		@apply bg-zinc-900 font-overpass text-stone-300;
+		@apply bg-zinc-900 font-geist text-stone-300;
 	}
 </style>

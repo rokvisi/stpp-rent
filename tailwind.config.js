@@ -4,8 +4,8 @@ export default {
 	theme: {
 		extend: {
 			fontFamily: {
-				overpass: 'Overpass, sans-serif',
-				mono: 'Overpass Mono'
+				geist: 'Geist, sans-serif',
+				mono: 'Geist Mono'
 			}
 		}
 	},
