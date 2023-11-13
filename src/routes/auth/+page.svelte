@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { authSchemas } from '$lib/zod_schemas';
+	import { tick } from 'svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 
 	export let data;
+	export let formEl: HTMLFormElement;
 	const { form, errors, enhance, message, submitting, constraints } = superForm(data.authForm, {
 		validators: authSchemas.register,
 		taintedMessage: null,
@@ -12,7 +14,7 @@
 
 <h1 class="pb-4 text-5xl">Auth page</h1>
 <div class="flex max-w-xs flex-col gap-3">
-	<form method="POST" class="flex flex-col gap-3" use:enhance>
+	<form bind:this={formEl} method="POST" class="flex flex-col gap-3" use:enhance>
 		<div>
 			<label for="username">username</label>
 			<input
@@ -119,4 +121,40 @@
 	{#if $message}
 		<p class="w-full rounded border bg-stone-800 p-4 text-red-300">{$message}</p>
 	{/if}
+
+	<div>
+		<p class="mb-1">Click to quick-login with test account credentials:</p>
+		<div class="space-x-1">
+			<button
+				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700"
+				on:click={async () => {
+					$form.username = 'user1';
+					$form.password = 'labas123';
+					formEl.action = '?/login';
+					await tick();
+					formEl.submit();
+				}}>rentee</button
+			>
+			<button
+				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700"
+				on:click={async () => {
+					$form.username = 'user2';
+					$form.password = 'labas123';
+					formEl.action = '?/login';
+					await tick();
+					formEl.submit();
+				}}>renter</button
+			>
+			<button
+				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700"
+				on:click={async () => {
+					$form.username = 'user3';
+					$form.password = 'labas123';
+					formEl.action = '?/login';
+					await tick();
+					formEl.submit();
+				}}>admin</button
+			>
+		</div>
+	</div>
 </div>
