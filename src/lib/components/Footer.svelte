@@ -1,6 +1,8 @@
-<footer class="flex items-center justify-between bg-zinc-800 px-4 py-2 shadow md:px-12 md:py-4">
+<footer
+	class="flex items-center justify-between bg-zinc-800 px-4 py-2 text-sm shadow sm:px-12 sm:py-4 sm:text-base"
+>
 	<div>
-		<p>T120B165 Saityno taikomųjų programų projektavimas</p>
+		<p>T120B165</p>
 		<p>Dėstytojas: Tomas Blažauskas</p>
 	</div>
 	<div>

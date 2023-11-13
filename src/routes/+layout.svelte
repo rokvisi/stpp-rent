@@ -7,6 +7,7 @@
 	import { page } from '$app/stores';
 	import MainContent from '$lib/components/MainContent.svelte';
 	import { sidebar } from '$lib/stores/sidebar';
+	import Sidebar from '$lib/components/Sidebar.svelte';
 
 	beforeNavigate(sidebar.hide);
 </script>
@@ -19,35 +20,9 @@
 </svelte:head>
 
 <div class="relative grid min-h-screen grid-rows-[auto_1fr_auto] overflow-hidden">
-	<Header>
-		{#if $page.data.user}
-			{#if $page.data.user.role === 'renter'}
-				<a class="inline-block" href="/renter">Dashboard</a>
-			{/if}
-
-			<div class="inline-flex gap-2">
-				<span
-					>{$page.data.user.username}<span class="text-xs italic">({$page.data.user.role})</span
-					></span
-				>
-				<form class="hidden md:block" action="/auth?/logout" method="POST">
-					<button>Logout</button>
-				</form>
-			</div>
-		{:else}
-			<a href="/auth">Login</a>
-		{/if}
-
-		<a class="hidden md:inline" href="/swagger/index.html">Docs</a>
-	</Header>
+	<Header />
 	{#if $sidebar}
-		<section class="block bg-zinc-700 px-20 py-20">
-			{#if $page.data.user}
-				<form action="/auth?/logout" method="POST">
-					<button>Logout</button>
-				</form>
-			{/if}
-		</section>
+		<Sidebar />
 	{:else}
 		<MainContent>
 			<slot />

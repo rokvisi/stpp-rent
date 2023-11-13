@@ -1,3 +1,3 @@
-<main class="px-4 pb-4 pt-10 md:px-12 md:pb-10 md:pt-20">
+<main class="px-4 pb-4 pt-10 sm:px-12 sm:pb-10 sm:pt-20">
 	<slot />
 </main>

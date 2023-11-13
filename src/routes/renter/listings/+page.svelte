@@ -1,5 +1,5 @@
 <script lang="ts">
-	import HouseCard from '$lib/components/HouseCard.svelte';
+	import HouseCardRenter from './HouseCardRenter.svelte';
 
 	export let data;
 	$: houses = data.houses;
@@ -12,7 +12,7 @@
 	<div>
 		<div class="flex flex-col gap-4">
 			{#each houses as house (house.id)}
-				<HouseCard {house} />
+				<HouseCardRenter {house} />
 			{/each}
 		</div>
 	</div>
