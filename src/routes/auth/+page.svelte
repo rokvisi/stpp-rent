@@ -10,6 +10,8 @@
 		taintedMessage: null,
 		resetForm: false
 	});
+
+	let quickBtnSubmitting = false;
 </script>
 
 <h1 class="pb-4 text-5xl">Auth page</h1>
@@ -126,31 +128,37 @@
 		<p class="mb-1">Click to quick-login with test account credentials:</p>
 		<div class="space-x-1">
 			<button
-				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700"
+				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700 disabled:cursor-wait disabled:opacity-40"
+				disabled={quickBtnSubmitting}
 				on:click={async () => {
 					$form.username = 'user1';
 					$form.password = 'labas123';
 					formEl.action = '?/login';
+					quickBtnSubmitting = true;
 					await tick();
 					formEl.submit();
 				}}>rentee</button
 			>
 			<button
-				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700"
+				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700 disabled:cursor-wait disabled:opacity-40"
+				disabled={quickBtnSubmitting}
 				on:click={async () => {
 					$form.username = 'user2';
 					$form.password = 'labas123';
 					formEl.action = '?/login';
+					quickBtnSubmitting = true;
 					await tick();
 					formEl.submit();
 				}}>renter</button
 			>
 			<button
-				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700"
+				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700 disabled:cursor-wait disabled:opacity-40"
+				disabled={quickBtnSubmitting}
 				on:click={async () => {
 					$form.username = 'user3';
 					$form.password = 'labas123';
 					formEl.action = '?/login';
+					quickBtnSubmitting = true;
 					await tick();
 					formEl.submit();
 				}}>admin</button
