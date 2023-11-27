@@ -8,17 +8,21 @@ export const roleNavLinks: Record<string, { href: string, title: string }[]> = {
     renter: [
         {
             href: "/renter/listings",
-            title: "Listings"
+            title: "My Listings"
         },
         {
             href: "/renter/contracts",
-            title: "Contracts"
+            title: "My Contracts"
         }
     ],
     rentee: [
         {
-            href: "/renter/contracts",
-            title: "TODO"
+            href: "/rentee/houses",
+            title: "House listings"
+        },
+        {
+            href: "/rentee/contracts",
+            title: "My contracts"
         }
     ]
 };

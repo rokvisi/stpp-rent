@@ -6,7 +6,12 @@
 		<p>Dėstytojas: Tomas Blažauskas</p>
 	</div>
 	<div>
-		<span>Rokas Višinskas</span>
-		<span>IFF-0/1</span>
+		<p>
+			<span>Rokas Višinskas</span>
+			<span>IFF-0/1</span>
+		</p>
+		<a href="/swagger/index.html" class="py-2 text-[#f96743] underline underline-offset-4"
+			>API Docs</a
+		>
 	</div>
 </footer>

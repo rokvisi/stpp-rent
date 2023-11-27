@@ -1,4 +1,4 @@
-import { pgHouseLocationNotes } from "$lib/database/schema";
+import { pgHouseLocationNotes, pgHouses } from "$lib/database/schema";
 import db from "$lib/server/db";
 import { getRequestFormData } from "$lib/server/helpers";
 import { houseNoteSchemas } from "$lib/zod_schemas";
@@ -72,12 +72,12 @@ export async function POST({ request, locals, params }) {
 
     //* Check if the specified house exists.
     const houseId = Number(params.house_id) ?? -1;
-    const dbRoom = await getHouseById(houseId);
-    if (dbRoom === undefined) return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
-    if (dbRoom === null) return actionResult('error', 'The specified house does not exist.', 404);
+    const dbHouse = await getHouseById(houseId);
+    if (dbHouse === undefined) return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
+    if (dbHouse === null) return actionResult('error', 'The specified house does not exist.', 404);
 
     //* Check if the user is the one that created the room and house.
-    if (dbRoom.house.fk_renter !== locals.user.id) return actionResult('error', "The specified house was created by a different renter.", 401);
+    if (dbHouse.fk_renter !== locals.user.id) return actionResult('error', "The specified house was created by a different renter.", 401);
 
     //* Insert the note into the database.
     try {
@@ -174,15 +174,8 @@ async function getNotesByHouseId(houseId: number, limit: number, offset: number)
 
 async function getHouseById(houseId: number) {
     try {
-        const res = await db.query.pgHouseLocationNotes.findFirst({
-            where: eq(pgHouseLocationNotes.fk_house, houseId),
-            with: {
-                house: {
-                    columns: {
-                        fk_renter: true
-                    }
-                }
-            }
+        const res = await db.query.pgHouses.findFirst({
+            where: eq(pgHouses.id, houseId),
         });
 
         if (res === undefined) return null;

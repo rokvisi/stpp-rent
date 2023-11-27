@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm';
-import { timestamp, serial, pgTable, text, integer } from 'drizzle-orm/pg-core';
+import { timestamp, serial, pgTable, text, integer, boolean } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 
 export const pgUsers = pgTable('users', {
@@ -165,8 +165,9 @@ export const insertCommonAreaImageSchema = createInsertSchema(pgCommonAreaImages
 
 export const pgContracts = pgTable('contracts', {
 	id: serial('id').primaryKey().notNull(),
-	start_date: timestamp('start_date').defaultNow().notNull(),
+	start_date: timestamp('start_date'),
 	end_date: timestamp('end_date'),
+	declined: boolean('declined').default(false).notNull(),
 	fk_room: integer("fk_room").notNull().references(() => pgRooms.id, { onDelete: 'cascade' }),
 	fk_rentee: integer("fk_rentee").notNull().references(() => pgUsers.id, { onDelete: 'cascade' })
 });

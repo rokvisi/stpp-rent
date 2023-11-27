@@ -15,7 +15,21 @@ export async function getRequestFormData(request: Request) {
     }
 }
 
+export async function getRequestJson(request: Request) {
+    try {
+        return await request.json();
+    } catch (e) {
+        return null; //? Invalid request body or somehow already consumed.
+    }
+}
+
+export function isValidImage(file: File) {
+    return file['type'].startsWith('image/') && !file['type'].startsWith('image/svg');
+}
+
 export async function uploadImageToVercel(filename: string, file: File) {
+    if (!isValidImage(file)) return null; // Invalid file type
+
     try {
         const { url } = await put(filename, file, { access: "public" });
         return url;
@@ -27,7 +41,6 @@ export async function uploadImageToVercel(filename: string, file: File) {
 
 export async function deleteImageFromVercel(filename: string) {
     try {
-        console.log("Trying to delete image.")
         await del(filename);
         return true;
     }

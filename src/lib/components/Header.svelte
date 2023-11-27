@@ -26,12 +26,11 @@
 						></span
 					>
 					<form class="hidden sm:block" action="/auth?/logout" method="POST">
-						<button>Logout</button>
+						<button class="text-[#f96743] underline underline-offset-4">Logout</button>
 					</form>
 				</div>
 			{:else}
-				<a href="/auth">Login</a>
-				<a href="/swagger/index.html">Docs</a>
+				<a href="/auth" class="text-[#f96743] underline underline-offset-4">Login</a>
 			{/if}
 		</div>
 	</div>
@@ -42,14 +41,10 @@
 				<a
 					href={link.href}
 					class="rounded px-3 py-2 text-stone-400 underline-offset-8 hover:bg-zinc-800 aria-[current]:text-stone-300 aria-[current]:underline"
-					aria-current={$page.url.pathname === link.href ? 'true' : undefined}>{link.title}</a
+					aria-current={$page.url.pathname.startsWith(link.href) ? 'true' : undefined}
+					>{link.title}</a
 				>
 			{/each}
-			<a
-				href="/swagger/index.html"
-				class="rounded px-3 py-2 text-stone-400 underline-offset-8 hover:bg-zinc-800 aria-[current]:text-stone-300 aria-[current]:underline"
-				>API Docs</a
-			>
 		</nav>
 	{/if}
 </header>

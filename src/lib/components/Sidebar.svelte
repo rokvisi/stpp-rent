@@ -24,11 +24,6 @@
 					aria-current={$page.url.pathname === link.href ? 'true' : undefined}>{link.title}</a
 				>
 			{/each}
-			<a
-				href="/swagger/index.html"
-				class="block rounded px-3 py-2 text-stone-400 underline-offset-8 hover:bg-zinc-800 aria-[current]:text-stone-300 aria-[current]:underline"
-				>API Docs</a
-			>
 		</nav>
 
 		{#if $page.data.user}

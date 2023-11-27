@@ -6,6 +6,7 @@
 	import MainContent from '$lib/components/MainContent.svelte';
 	import { sidebar } from '$lib/stores/sidebar';
 	import Sidebar from '$lib/components/Sidebar.svelte';
+	import { SvelteToast } from '@zerodevx/svelte-toast';
 </script>
 
 <svelte:head>
@@ -15,6 +16,7 @@
 	/>
 </svelte:head>
 
+<SvelteToast />
 <div class="relative grid min-h-screen grid-rows-[auto_1fr_auto] overflow-hidden">
 	<Header />
 	{#if $sidebar}

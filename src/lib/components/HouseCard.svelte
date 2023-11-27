@@ -16,8 +16,16 @@
 		house.room_price_min === house.room_price_max ? house.room_price_min : undefined;
 </script>
 
-<div class="flex max-w-sm flex-col gap-2 rounded-xl border border-t-4 border-zinc-500 p-2 shadow">
-	<img class="rounded" src={house.image_url} alt="banner" />
+<a
+	href="/rentee/houses/{house.id}"
+	class="flex max-w-sm flex-col gap-2 rounded-xl border border-t-4 border-zinc-500 p-2 shadow"
+>
+	<img
+		class="rounded"
+		src={house.image_url ??
+			'https://ghryg4oekbndllfk.public.blob.vercel-storage.com/banner-C3cjpFtJVWCFrsAszkgMxXlXpsahB9.webp'}
+		alt="banner"
+	/>
 
 	<div>
 		<p>{house.id}</p>
@@ -36,4 +44,4 @@
 			{/if}
 		</p>
 	</div>
-</div>
+</a>

@@ -133,11 +133,11 @@ export async function PATCH({ request, params, locals }) {
     const areaId = Number(params.area_id) ?? -1;
     const dbCommonArea = await getCommonAreaByHouseIdAndAreaId(houseId, areaId);
 
-    if (dbCommonArea === null) throw error(404, "The common area with the specified id does not exist in the house.");
-    if (dbCommonArea === undefined) throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
+    if (dbCommonArea === null) return actionResult('error', "The common area with the specified id does not exist in the house.", 404);
+    if (dbCommonArea === undefined) return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);
 
     //* Check if the logged-in user is the one that created it.
-    if (dbCommonArea.house.fk_renter !== locals.user.id) throw error(401, "The specified common area of the house was created by a different renter.");
+    if (dbCommonArea.house.fk_renter !== locals.user.id) return actionResult('error', "The specified common area of the house was created by a different renter.", 401);
 
     const updateResult = await updateCommonAreaWithHouseId(houseId, areaId, form.data);
     if (updateResult === false) return actionResult('error', 'Sorry, we are currently experiencing technical difficulties. Please try again later.', 503);

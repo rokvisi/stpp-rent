@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PageHeading from '$lib/components/PageHeading.svelte';
 	import { authSchemas } from '$lib/zod_schemas';
 	import { tick } from 'svelte';
 	import { superForm } from 'sveltekit-superforms/client';
@@ -14,7 +15,7 @@
 	let quickBtnSubmitting = false;
 </script>
 
-<h1 class="pb-4 text-5xl">Auth page</h1>
+<PageHeading>Auth page</PageHeading>
 <div class="flex max-w-xs flex-col gap-3">
 	<form bind:this={formEl} method="POST" class="flex flex-col gap-3" use:enhance>
 		<div>
@@ -125,8 +126,10 @@
 	{/if}
 
 	<div>
-		<p class="mb-1">Click to quick-login with test account credentials:</p>
-		<div class="space-x-1">
+		<p class="mb-2">
+			Use to <span class="font-bold">quick-login</span> to test accounts:
+		</p>
+		<div class="flex flex-wrap gap-1">
 			<button
 				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700 disabled:cursor-wait disabled:opacity-40"
 				disabled={quickBtnSubmitting}
@@ -149,13 +152,25 @@
 					quickBtnSubmitting = true;
 					await tick();
 					formEl.submit();
-				}}>renter</button
+				}}>renter_1</button
 			>
 			<button
 				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700 disabled:cursor-wait disabled:opacity-40"
 				disabled={quickBtnSubmitting}
 				on:click={async () => {
 					$form.username = 'user3';
+					$form.password = 'labas123';
+					formEl.action = '?/login';
+					quickBtnSubmitting = true;
+					await tick();
+					formEl.submit();
+				}}>renter_2</button
+			>
+			<button
+				class="rounded border border-dashed border-orange-300 bg-stone-800 px-2 py-1 hover:bg-stone-700 disabled:cursor-wait disabled:opacity-40"
+				disabled={quickBtnSubmitting}
+				on:click={async () => {
+					$form.username = 'user4';
 					$form.password = 'labas123';
 					formEl.action = '?/login';
 					quickBtnSubmitting = true;

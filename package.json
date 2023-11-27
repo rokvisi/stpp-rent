@@ -16,9 +16,11 @@
   "devDependencies": {
     "@sveltejs/adapter-vercel": "^3.0.3",
     "@sveltejs/kit": "^1.20.4",
+    "@tailwindcss/typography": "^0.5.10",
     "@types/lodash-es": "^4.17.9",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
+    "@zerodevx/svelte-toast": "^0.9.5",
     "autoprefixer": "^10.4.15",
     "eslint": "^8.28.0",
     "eslint-config-prettier": "^8.5.0",
@@ -38,6 +40,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@rgossiaux/svelte-headlessui": "^2.0.0",
     "@vercel/blob": "^0.13.0",
     "@vercel/postgres": "^0.4.1",
     "@zerodevx/svelte-json-view": "^1.0.7",

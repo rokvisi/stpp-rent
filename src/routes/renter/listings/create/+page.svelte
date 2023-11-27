@@ -1,6 +1,9 @@
 <script lang="ts">
+	import PageHeading from '$lib/components/PageHeading.svelte';
+	import ArrowLeftIcon from '$lib/components/icons/ArrowLeftIcon.svelte';
 	import { houseSchemas } from '$lib/zod_schemas.js';
 	import { superForm } from 'sveltekit-superforms/client';
+	import PageTitle from '../PageTitle.svelte';
 
 	export let data;
 	const { form, errors, enhance, message, submitting, constraints, reset } = superForm(
@@ -37,7 +40,7 @@
 	}
 </script>
 
-<h1 class="pb-4 text-5xl">List a house up for rent</h1>
+<PageTitle>List a house up for rent</PageTitle>
 <div class="flex max-w-xs flex-col gap-3">
 	<form
 		class="flex flex-col gap-3"
@@ -115,10 +118,12 @@
 		</div>
 		<div class="flex flex-col gap-2">
 			<div>
-				<label for="wifi_speed">Banner Image</label>
+				<label for="image">Banner Image</label>
 				<input
+					id="image"
 					class="block w-full rounded border px-1 py-1"
 					type="file"
+					accept="image/*"
 					name="image"
 					required
 					on:change={onImageSelect}
