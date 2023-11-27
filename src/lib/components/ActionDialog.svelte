@@ -27,7 +27,7 @@
 
 <dialog
 	bind:this={modalEl}
-	class="overflow-hidden rounded drop-shadow-glow-2xl backdrop:bg-stone-900 backdrop:bg-opacity-50 backdrop:backdrop-blur-sm"
+	class="overflow-auto rounded drop-shadow-glow-2xl backdrop:bg-stone-900 backdrop:bg-opacity-50 backdrop:backdrop-blur-sm"
 >
 	<div class="flex flex-col gap-6 rounded border bg-stone-600 p-5 shadow drop-shadow-glow-2xl">
 		<p class="text-white"><slot /></p>

@@ -73,11 +73,8 @@
 	let imageIdForDeletion = -1;
 	let showImageDeleteModal: () => void;
 	async function deleteRoomImage() {
-		const res = await fetch('/api/v1/room-images/', {
-			method: 'DELETE',
-			body: JSON.stringify({
-				image_id: imageIdForDeletion
-			})
+		const res = await fetch(`/api/v1/room-images/${imageIdForDeletion}`, {
+			method: 'DELETE'
 		});
 
 		if (!res.ok) {

@@ -58,17 +58,19 @@ const authHandle: Handle = async ({ event, resolve }) => {
 
 const protectedPagesHandle: Handle = async ({ event, resolve }) => {
 	//* Renter
-	if (event.url.pathname.startsWith("/renter")) {
-		if (event.locals.user?.role !== "renter") {
-			throw redirect(303, "/auth")
-		}
+	if (event.url.pathname.startsWith("/renter") && event.locals.user?.role !== "renter") {
+		throw redirect(303, "/auth")
 	}
 
 	//* Rentee
-	//TODO: Implement
+	if (event.url.pathname.startsWith("/rentee") && event.locals.user?.role !== "rentee") {
+		throw redirect(303, "/auth")
+	}
 
 	//* Admin
-	//TODO: Implement
+	if (event.url.pathname.startsWith("/admin") && event.locals.user?.role !== "admin") {
+		throw redirect(303, "/auth")
+	}
 
 	return await resolve(event);
 }

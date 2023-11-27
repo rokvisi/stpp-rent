@@ -4,16 +4,12 @@ import { deleteImageFromVercel } from "$lib/server/helpers";
 import { error } from "@sveltejs/kit";
 import { eq } from "drizzle-orm";
 
-export async function DELETE({ request, locals }) {
+export async function DELETE({ locals, params }) {
     //* Authenticated as a renter.
     if (locals.user?.role !== "renter") throw error(401, "Only renters can update houses. Please login.");
 
-    //* Got form data in the request.
-    const json = await request.json();
-    if (json.image_id === undefined) throw error(400, "The request json is invalid. Please check your data and try again.");
-
     //* Get the room of the image
-    const imageId = json.image_id;
+    const imageId = Number(params.image_id) ?? -1;
     const dbRoomImage = await getRoomImageById(imageId);
     if (dbRoomImage === null) throw error(404, "The room image with the specified id does not exist.");
     if (dbRoomImage === undefined) throw error(503, 'Sorry, we are currently experiencing technical difficulties. Please try again later.');
