@@ -1,4 +1,5 @@
 import db from "$lib/server/db";
+import { error } from "@sveltejs/kit";
 
 export async function load() {
     type Image = { id: number, url: string, type: "house" | "room" | 'common-area' };

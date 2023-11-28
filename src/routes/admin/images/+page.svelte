@@ -14,6 +14,11 @@
 		</div>
 	{:then houseImages}
 		<ImageManagerGrid images={houseImages} />
+	{:catch e}
+		<div class="mb-4 mt-2">
+			<p>Error fetching house images!</p>
+			<p class="text-red-500">{JSON.stringify(e)}</p>
+		</div>
 	{/await}
 </section>
 
@@ -26,6 +31,11 @@
 		</div>
 	{:then roomImages}
 		<ImageManagerGrid images={roomImages} />
+	{:catch e}
+		<div class="mb-4 mt-2">
+			<p>Error fetching room images!</p>
+			<p class="text-red-500">{JSON.stringify(e)}</p>
+		</div>
 	{/await}
 </section>
 
@@ -38,5 +48,10 @@
 		</div>
 	{:then commonAreaImages}
 		<ImageManagerGrid images={commonAreaImages} />
+	{:catch e}
+		<div class="mb-4 mt-2">
+			<p>Error fetching common area images!</p>
+			<p class="text-red-500">{JSON.stringify(e)}</p>
+		</div>
 	{/await}
 </section>
