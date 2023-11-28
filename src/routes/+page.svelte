@@ -4,8 +4,8 @@
 	import blob from '$lib/assets/house-lottie.json';
 </script>
 
-<div class="flex h-full flex-col items-center justify-center gap-20 md:flex-row">
-	<div class="relative h-full w-full md:hidden">
+<div class="flex h-full flex-col items-center justify-center md:flex-row md:gap-20">
+	<div class="relative aspect-square w-[80%] md:hidden">
 		<div class="absolute left-0 top-0 h-full w-full" use:lottie={blob} />
 	</div>
 
@@ -20,10 +20,10 @@
 			<p class="text-xl">
 				<a
 					class="font-medium text-[#f96743] underline underline-offset-8 transition-all hover:underline-offset-[6px]"
-					href="/auth">Create an account or login</a
+					href="/auth">Sign up or login</a
 				>
 				to search for a room
-				<br /> or list up your own place for an extra income!
+				<br /> or list up your own for some extra income!
 			</p>
 		</div>
 	</div>

@@ -53,7 +53,7 @@
 				class="absolute left-0 top-0 hidden h-full w-full items-center justify-center group-hover:flex group-hover:bg-stone-700"
 			>
 				<button
-					class="rounded border bg-red-700 px-8 py-3 hover:bg-red-500"
+					class="rounded border bg-red-700 px-4 py-1 hover:bg-red-500 sm:px-8 sm:py-3"
 					on:click={() => {
 						selectedImage = image;
 						showImageDeleteModal();
