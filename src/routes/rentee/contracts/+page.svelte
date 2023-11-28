@@ -65,11 +65,11 @@
 
 									<div>
 										<a
-											class="mb-2 block rounded border px-2 py-1 text-center"
+											class="mb-2 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/rentee/houses/{contract.room.house.id}">View house</a
 										>
 										<button
-											class="w-full rounded border bg-red-600 px-10 py-1"
+											class="w-full rounded border bg-red-600 px-10 py-1 hover:bg-red-500"
 											on:click={() => {
 												selectedContract = contract;
 												showEndContractModal();
@@ -105,7 +105,7 @@
 
 									<div>
 										<a
-											class="block rounded border px-2 py-1 text-center"
+											class="mb-2 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/rentee/houses/{contract.room.house.id}">View house</a
 										>
 									</div>
@@ -138,7 +138,7 @@
 
 									<div>
 										<a
-											class="block rounded border px-2 py-1 text-center"
+											class="mb-2 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/rentee/houses/{contract.room.house.id}">View house</a
 										>
 									</div>
@@ -171,7 +171,7 @@
 
 									<div>
 										<a
-											class="block rounded border px-2 py-1 text-center"
+											class="mb-2 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/rentee/houses/{contract.room.house.id}">View house</a
 										>
 									</div>

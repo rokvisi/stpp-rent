@@ -1,6 +1,5 @@
 <script lang="ts">
 	import ActionDialog from '$lib/components/ActionDialog.svelte';
-	import PageHeading from '$lib/components/PageHeading.svelte';
 	import BedIcon from '$lib/components/icons/BedIcon.svelte';
 	import PriceTagIcon from '$lib/components/icons/PriceTagIcon.svelte';
 	import ShowerIcon from '$lib/components/icons/ShowerIcon.svelte';
@@ -40,7 +39,6 @@
 		}
 
 		toast.push('Successfully reserved room!', toastOpts.success);
-		// area.images = area.images.filter((i) => i.id !== imageIdForDeletion);
 		selectedRoom = undefined;
 		return 'ok';
 	}
@@ -65,6 +63,15 @@
 	</div>
 
 	<p>{house.location_description}</p>
+
+	{#if house.houseLocationNotes.length !== 0}
+		<div class="not-prose my-2 rounded border border-dashed border-sky-300 px-2 py-1 text-sky-400">
+			<p>Important location notes:</p>
+			{#each house.houseLocationNotes as note (note.id)}
+				<p><WarningIcon /> {note.note}</p>
+			{/each}
+		</div>
+	{/if}
 </section>
 
 <!-- Common Areas -->
@@ -147,7 +154,7 @@
 							<div
 								class="my-2 rounded border border-dashed border-sky-300 px-2 py-1 prose-p:text-sky-400"
 							>
-								<p class="prose prose-invert">Important notes:</p>
+								<p class="prose prose-invert">Important room notes:</p>
 								{#each room.notes as note (note.id)}
 									<p class="prose prose-invert"><WarningIcon /> {note.note}</p>
 								{/each}
@@ -167,7 +174,7 @@
 
 						{#if !roomNotAvailable}
 							<button
-								class="mt-8 rounded border px-4 py-1 hover:bg-stone-600 disabled:cursor-not-allowed"
+								class="mt-6 rounded border px-4 py-2 hover:bg-stone-600 disabled:cursor-not-allowed"
 								disabled={roomNotAvailable}
 								on:click={() => {
 									selectedRoom = room;

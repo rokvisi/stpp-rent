@@ -99,12 +99,12 @@
 
 									<div>
 										<a
-											class="mb-2 block rounded border px-2 py-1 text-center"
+											class="mb-3 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/renter/listings/{contract.house.id}">View house</a
 										>
 										<div class="flex flex-wrap items-center justify-between gap-2">
 											<button
-												class="block grow rounded border bg-red-600 px-10 py-1"
+												class="block grow rounded border bg-red-600 px-10 py-1 hover:bg-red-500"
 												on:click={async () => {
 													selectedContract = undefined;
 													selectedContract = contract;
@@ -114,7 +114,7 @@
 												}}>Decline</button
 											>
 											<button
-												class="block grow rounded border bg-green-600 px-10 py-1"
+												class="block grow rounded border bg-green-600 px-10 py-1 hover:bg-green-500"
 												on:click={async () => {
 													selectedContract = undefined;
 													selectedContract = contract;
@@ -155,7 +155,7 @@
 
 									<div>
 										<a
-											class="block rounded border px-2 py-1 text-center"
+											class="mb-2 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/renter/listings/{contract.house.id}">View house</a
 										>
 									</div>
@@ -189,7 +189,7 @@
 
 									<div>
 										<a
-											class="block rounded border px-2 py-1 text-center"
+											class="mb-2 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/renter/listings/{contract.house.id}">View house</a
 										>
 									</div>
@@ -223,7 +223,7 @@
 
 									<div>
 										<a
-											class="block rounded border px-2 py-1 text-center"
+											class="mb-2 block rounded border px-2 py-1 text-center hover:bg-zinc-800"
 											href="/renter/listings/{contract.house.id}">View house</a
 										>
 									</div>
