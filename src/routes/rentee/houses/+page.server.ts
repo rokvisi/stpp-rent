@@ -9,8 +9,8 @@ export async function load() {
                 }
             },
             rooms: {
-                columns: {
-                    price: true
+                with: {
+                    contracts: true
                 }
             }
         },
@@ -22,13 +22,25 @@ export async function load() {
 
         return {
             ...h,
-            rooms: undefined,
             room_price_min: room_price_min === Infinity ? 0 : room_price_min,
             room_price_max: room_price_max === -Infinity ? 0 : room_price_max
         }
     })
 
+    //* Get room availability
+    const res2 = res.map(r => ({
+        ...r, rooms: r.rooms.map(room => ({
+            ...room,
+            available: room.contracts.findIndex(c => c.start_date !== null && c.end_date === null) === -1
+        }))
+    }));
+
+    const res3 = res2.map(h => ({
+        ...h,
+        availableRooms: h.rooms.filter(r => r.available).length
+    }))
+
     return {
-        houses: res
+        houses: res3
     }
 }

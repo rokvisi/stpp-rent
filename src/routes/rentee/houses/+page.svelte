@@ -7,7 +7,7 @@
 </script>
 
 <PageHeading>All house listings</PageHeading>
-<div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+<div class="flex flex-wrap gap-8">
 	{#each houses as house (house.id)}
 		<HouseCard {house} />
 	{/each}

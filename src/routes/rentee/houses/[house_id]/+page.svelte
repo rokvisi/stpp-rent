@@ -21,6 +21,7 @@
 		.map((a) => a.name.toLowerCase())
 		.filter((a) => a.includes('bath') || a.includes('toilet')).length;
 	$: numOfRooms = house.rooms.length;
+	$: numOfAvailableRooms = house.rooms.filter((room) => room.contracts.length === 0).length;
 
 	let selectedRoom: Room | undefined;
 	let showReserveRoomDialog: () => void;
@@ -59,11 +60,11 @@
 			{minRoomPrice} - {maxRoomPrice} Euro
 		</p>
 		<p class="m-auto"><ShowerIcon class="mr-2" /> {numOfBathrooms} washrooms</p>
-		<p class="m-auto"><BedIcon class="mr-2" /> {numOfRooms} bedrooms</p>
+		<p class="m-auto"><BedIcon class="mr-2" /> {numOfAvailableRooms} / {numOfRooms} bedrooms</p>
 		<p class="m-auto"><WifiIcon class="mr-2" /> {house.wifi_speed} Mb/s</p>
 	</div>
 
-	<p class="">{house.location_description}</p>
+	<p>{house.location_description}</p>
 </section>
 
 <!-- Common Areas -->
@@ -71,25 +72,29 @@
 	<h2 class="mt-5 pb-4 text-2xl">Common areas:</h2>
 	<div class="max-w-xl">
 		<TabGroup>
-			<TabList class="space-x-2">
+			<TabList class="flex flex-wrap gap-3">
 				{#each house.commonAreas as commonArea (commonArea.id)}
 					<Tab
 						class={({ selected }) =>
-							`rounded border px-2 py-1 ${selected ? 'bg-stone-600 text-white' : 'tab-unselected'}`}
+							`rounded border px-2 py-1 hover:bg-stone-500 hover:bg-opacity-20 ${selected ? 'bg-stone-600 text-white' : 'tab-unselected'}`}
 						>{commonArea.name}</Tab
 					>
 				{/each}
 			</TabList>
-			<TabPanels class="my-2 overflow-auto">
+			<TabPanels class="my-4 overflow-auto">
 				{#each house.commonAreas as commonArea (commonArea.id)}
 					<TabPanel>
-						<div>
+						<div class="flex flex-wrap gap-3">
 							{#each commonArea.images as image (image.id)}
-								<img
-									class="h-80 max-w-xs rounded border border-stone-600"
-									src={image.url}
-									alt="room_image_{image.id}"
-								/>
+								<div
+									class="group relative flex aspect-square w-40 items-start justify-end overflow-hidden rounded border shadow xl:w-64"
+								>
+									<img
+										class="absolute left-0 top-0 h-full w-full"
+										src={image.url}
+										alt="common_area_image_{image.id}"
+									/>
+								</div>
 							{/each}
 						</div>
 					</TabPanel>
@@ -115,19 +120,19 @@
 	</ActionDialog>
 
 	<TabGroup>
-		<TabList class="space-x-2">
+		<TabList class="flex flex-wrap gap-3">
 			{#each house.rooms as room (room.id)}
 				{@const roomNotAvailable = room.contracts.length !== 0}
 				<Tab
 					disabled={roomNotAvailable}
 					class={({ selected }) =>
-						`rounded border px-2 py-1 disabled:line-through disabled:opacity-50 ${
+						`rounded border px-2 py-1 hover:bg-stone-500 hover:bg-opacity-20 disabled:line-through disabled:opacity-50 ${
 							selected ? 'bg-stone-600 text-white' : ''
 						}`}>No. {room.number}</Tab
 				>
 			{/each}
 		</TabList>
-		<TabPanels class="my-2 max-w-2xl">
+		<TabPanels class="my-4 max-w-2xl">
 			{#each house.rooms as room (room.id)}
 				{@const roomNotAvailable = room.contracts.length !== 0}
 				<TabPanel>
@@ -153,26 +158,30 @@
 						{/if}
 
 						<!-- Images -->
-						<div class="flex flex-wrap gap-2">
+						<div class="mt-4 flex flex-wrap gap-3">
 							{#each room.images as image (image.id)}
-								<img
-									class="h-80 max-w-xs rounded border border-stone-600"
-									src={image.url}
-									alt="room_image_{image.id}"
-								/>
+								<div
+									class="group relative flex aspect-square w-40 items-start justify-end overflow-hidden rounded border shadow xl:w-64"
+								>
+									<img
+										class="absolute left-0 top-0 h-full w-full"
+										src={image.url}
+										alt="room_image_{image.id}"
+									/>
+								</div>
 							{/each}
 						</div>
 
 						{#if !roomNotAvailable}
 							<button
-								class="my-2 rounded border px-2 py-1 hover:bg-stone-600 disabled:cursor-not-allowed"
+								class="mt-8 rounded border px-4 py-1 hover:bg-stone-600 disabled:cursor-not-allowed"
 								disabled={roomNotAvailable}
 								on:click={() => {
 									selectedRoom = room;
 									showReserveRoomDialog();
 								}}
 							>
-								Reserve Room
+								Reserve Room No. {room.number}
 							</button>
 						{/if}
 					</div>
