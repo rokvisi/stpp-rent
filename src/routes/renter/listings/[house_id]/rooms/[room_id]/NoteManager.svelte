@@ -62,36 +62,37 @@
 </script>
 
 <div class="space-y-2">
-	{#each room.notes as note, i (note.id)}
-		<div class="flex items-center rounded border px-2 py-1 shadow">
-			<span class="mr-auto">{i + 1}. {note.note}</span>
+	<div class="flex flex-col gap-2 rounded border">
+		{#each room.notes as note, i (note.id)}
+			<div class="flex items-center px-2 py-1 even:bg-stone-800">
+				<span class="mr-auto">{i + 1}. {note.note}</span>
 
-			<button
-				class="flex items-center gap-1 rounded px-2 py-1 hover:bg-zinc-800 disabled:cursor-wait"
-				on:click={() => deleteNote(note.id)}
-				disabled={noteStatusBusy}
-			>
-				<XIcon />
-				<span>{noteStatusBusy ? 'wait...' : 'Delete'}</span>
-			</button>
-		</div>
-	{/each}
-
-	<div class="flex items-center gap-4 rounded border px-2 py-2">
-		<label class="inline-block shrink-0" for="newNoteInput">Post note:</label>
+				<button
+					class="flex items-center gap-1 rounded px-2 py-1 hover:bg-zinc-800 disabled:cursor-wait"
+					on:click={() => deleteNote(note.id)}
+					disabled={noteStatusBusy}
+				>
+					<XIcon />
+					<span>{noteStatusBusy ? 'Busy...' : 'Delete'}</span>
+				</button>
+			</div>
+		{/each}
+	</div>
+	<div class="space-y-2 rounded py-2">
 		<input
 			id="newNoteInput"
 			type="text"
+			placeholder="Write new note..."
 			bind:value={newNoteText}
-			class="w-full rounded px-2 py-1 text-black shadow"
+			class="w-full rounded border bg-neutral-300 px-2 py-2 text-neutral-950 shadow placeholder:text-stone-800"
 		/>
 		<button
-			class="flex items-center gap-1 rounded px-2 py-1 hover:bg-zinc-800 disabled:cursor-wait"
+			class="flex items-center gap-1 rounded border px-3 py-1.5 hover:bg-zinc-800 disabled:cursor-wait"
 			on:click={createNote}
 			disabled={noteStatusBusy}
 		>
 			<PlusIcon />
-			<p>{noteStatusBusy ? 'wait...' : 'Create'}</p>
+			<p>{noteStatusBusy ? 'Busy...' : 'Post new note'}</p>
 		</button>
 	</div>
 </div>

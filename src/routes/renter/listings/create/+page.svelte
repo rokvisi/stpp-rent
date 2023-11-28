@@ -55,7 +55,7 @@
 				id="name"
 				name="name"
 				type="text"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.name}
 				aria-invalid={$errors.name ? 'true' : undefined}
 			/>
@@ -67,7 +67,7 @@
 				id="region"
 				name="region"
 				type="text"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.region}
 				{...$constraints.region}
 				aria-invalid={$errors.region ? 'true' : undefined}
@@ -80,7 +80,7 @@
 				id="district"
 				name="district"
 				type="text"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.district}
 				{...$constraints.district}
 				aria-invalid={$errors.district ? 'true' : undefined}
@@ -93,7 +93,7 @@
 				id="location_description"
 				name="location_description"
 				type="text"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.location_description}
 				{...$constraints.location_description}
 				aria-invalid={$errors.location_description ? 'true' : undefined}
@@ -108,7 +108,7 @@
 				id="wifi_speed"
 				name="wifi_speed"
 				type="number"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.wifi_speed}
 				{...$constraints.wifi_speed}
 				aria-invalid={$errors.wifi_speed ? 'true' : undefined}

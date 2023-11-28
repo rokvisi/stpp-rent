@@ -42,7 +42,7 @@
 				id="number"
 				name="number"
 				type="number"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.number}
 				aria-invalid={$errors.number ? 'true' : undefined}
 			/>
@@ -56,7 +56,7 @@
 				id="price"
 				name="price"
 				type="number"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.price}
 				{...$constraints.price}
 				aria-invalid={$errors.price ? 'true' : undefined}
@@ -72,7 +72,7 @@
 				name="description"
 				type="text"
 				placeholder="Room description..."
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.description}
 				{...$constraints.description}
 				aria-invalid={$errors.description ? 'true' : undefined}

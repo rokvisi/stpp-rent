@@ -7,7 +7,7 @@
 
 <div>
 	<button
-		class="mb-2 flex w-full items-center gap-2 border-b py-1 text-xl"
+		class="mb-2 flex w-full items-center gap-2 border-b border-neutral-500 py-1 text-xl"
 		on:click={() => (opened = !opened)}
 	>
 		<ArrowUpCircleIcon class="transition-all {opened ? '' : '-rotate-90'}" />

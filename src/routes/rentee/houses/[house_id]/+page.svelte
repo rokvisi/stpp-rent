@@ -70,14 +70,15 @@
 <!-- Common Areas -->
 <section>
 	<h2 class="mt-5 pb-4 text-2xl">Common areas:</h2>
-	<div class="max-w-xl">
+	<div class="max-w-2xl">
 		<TabGroup>
 			<TabList class="flex flex-wrap gap-3">
 				{#each house.commonAreas as commonArea (commonArea.id)}
 					<Tab
 						class={({ selected }) =>
-							`rounded border px-2 py-1 hover:bg-stone-500 hover:bg-opacity-20 ${selected ? 'bg-stone-600 text-white' : 'tab-unselected'}`}
-						>{commonArea.name}</Tab
+							`rounded border px-2 py-1 hover:bg-stone-500 hover:bg-opacity-20 ${
+								selected ? 'bg-stone-600 text-white' : 'tab-unselected'
+							}`}>{commonArea.name}</Tab
 					>
 				{/each}
 			</TabList>
@@ -87,13 +88,9 @@
 						<div class="flex flex-wrap gap-3">
 							{#each commonArea.images as image (image.id)}
 								<div
-									class="group relative flex aspect-square w-40 items-start justify-end overflow-hidden rounded border shadow xl:w-64"
+									class="group relative flex max-w-xs items-start justify-end overflow-hidden rounded border shadow"
 								>
-									<img
-										class="absolute left-0 top-0 h-full w-full"
-										src={image.url}
-										alt="common_area_image_{image.id}"
-									/>
+									<img class="aspect-[16/14]" src={image.url} alt="common area image{image.id}" />
 								</div>
 							{/each}
 						</div>
@@ -161,13 +158,9 @@
 						<div class="mt-4 flex flex-wrap gap-3">
 							{#each room.images as image (image.id)}
 								<div
-									class="group relative flex aspect-square w-40 items-start justify-end overflow-hidden rounded border shadow xl:w-64"
+									class="group relative flex max-w-xs items-start justify-end overflow-hidden rounded border shadow"
 								>
-									<img
-										class="absolute left-0 top-0 h-full w-full"
-										src={image.url}
-										alt="room_image_{image.id}"
-									/>
+									<img class="aspect-[16/14]" src={image.url} alt="room_image_{image.id}" />
 								</div>
 							{/each}
 						</div>

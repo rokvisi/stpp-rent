@@ -43,7 +43,7 @@
 				name="name"
 				type="text"
 				placeholder="Common area name..."
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.name}
 				{...$constraints.name}
 				aria-invalid={$errors.name ? 'true' : undefined}

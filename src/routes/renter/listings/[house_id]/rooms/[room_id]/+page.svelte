@@ -106,7 +106,6 @@
 </script>
 
 <PageTitle>Edit room {room.number}</PageTitle>
-
 <div class="flex min-w-[320px] max-w-[320px] flex-col gap-3">
 	<form
 		class="flex flex-col gap-3"
@@ -121,7 +120,7 @@
 				id="number"
 				name="number"
 				type="number"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.number}
 				aria-invalid={$errors.number ? 'true' : undefined}
 			/>
@@ -135,7 +134,7 @@
 				id="price"
 				name="price"
 				type="number"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.price}
 				{...$constraints.price}
 				aria-invalid={$errors.price ? 'true' : undefined}
@@ -151,7 +150,7 @@
 				name="description"
 				type="text"
 				placeholder="Room description..."
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.description}
 				{...$constraints.description}
 				aria-invalid={$errors.description ? 'true' : undefined}
@@ -194,8 +193,8 @@
 
 	<div class="mb-8 flex flex-wrap gap-4">
 		{#each room.images as image (image.id)}
-			<div class="group relative">
-				<img class="max-w-xs rounded border shadow" src={image.url} alt="" />
+			<div class="group relative flex max-w-sm">
+				<img class="aspect-[4/3] rounded border shadow" src={image.url} alt="" />
 				<button
 					class="absolute right-0 top-0 hidden rounded-full p-2 text-red-800 opacity-50 hover:opacity-100 group-hover:inline-block"
 					on:click={() => {

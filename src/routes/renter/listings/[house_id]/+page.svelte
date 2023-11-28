@@ -64,18 +64,18 @@
 	}
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="flex max-w-3xl flex-col gap-2">
 	<PageTitle>Edit house '{house.name}'</PageTitle>
 
 	<!-- House update -->
 	<section>
 		<h2 class="pb-4 text-2xl">House data:</h2>
 
-		<div class="grid-flow-rows grid grid-cols-1 gap-x-8 md:grid-cols-[auto_1fr]">
+		<div class="grid-flow-rows grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-[auto_1fr]">
 			<img
 				src={previewImageUrl !== null ? previewImageUrl : house.image_url}
 				alt="banner"
-				class="min-h-full max-w-md rounded-2xl border bg-red-200"
+				class="rounded-2xl border bg-red-200"
 			/>
 			<div class="flex min-w-[320px] max-w-[320px] flex-col gap-3 rounded">
 				<form
@@ -91,7 +91,7 @@
 							id="name"
 							name="name"
 							type="text"
-							class="block w-full rounded border px-1 py-1 text-black"
+							class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950"
 							bind:value={$form.name}
 							aria-invalid={$errors.name ? 'true' : undefined}
 						/>
@@ -105,7 +105,7 @@
 							id="region"
 							name="region"
 							type="text"
-							class="block w-full rounded border px-1 py-1 text-black"
+							class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950"
 							bind:value={$form.region}
 							{...$constraints.region}
 							aria-invalid={$errors.region ? 'true' : undefined}
@@ -120,7 +120,7 @@
 							id="district"
 							name="district"
 							type="text"
-							class="block w-full rounded border px-1 py-1 text-black"
+							class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950"
 							bind:value={$form.district}
 							{...$constraints.district}
 							aria-invalid={$errors.district ? 'true' : undefined}
@@ -135,7 +135,7 @@
 							id="location_description"
 							name="location_description"
 							type="text"
-							class="block w-full rounded border px-1 py-1 text-black"
+							class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950"
 							bind:value={$form.location_description}
 							{...$constraints.location_description}
 							aria-invalid={$errors.location_description ? 'true' : undefined}
@@ -150,7 +150,7 @@
 							id="wifi_speed"
 							name="wifi_speed"
 							type="number"
-							class="block w-full rounded border px-1 py-1 text-black"
+							class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950"
 							bind:value={$form.wifi_speed}
 							{...$constraints.wifi_speed}
 							aria-invalid={$errors.wifi_speed ? 'true' : undefined}
@@ -199,7 +199,7 @@
 	<!-- Rooms -->
 	<section>
 		<h2 class="mt-5 pb-4 text-2xl">Rooms:</h2>
-		<div class="flex gap-2">
+		<div class="flex flex-wrap gap-3 sm:gap-5">
 			{#each house.rooms as room (room.id)}
 				<button
 					class="group relative flex aspect-square w-32 items-start justify-end overflow-hidden rounded border shadow"
@@ -234,7 +234,7 @@
 	<!-- Common areas -->
 	<section>
 		<h2 class="mt-5 pb-4 text-2xl">Common areas:</h2>
-		<div class="flex gap-2">
+		<div class="flex flex-wrap gap-3 sm:gap-5">
 			{#each house.commonAreas as commonArea (commonArea.id)}
 				<button
 					class="group relative flex aspect-square w-32 items-end justify-center overflow-hidden rounded border shadow"
@@ -277,7 +277,7 @@
 			confirmAction={() => deleteHouseListing()}
 		>
 			Are you sure you want to delete this house listing?
-			<p class="italic">(This includes also includes all related objects)</p>
+			<p class="italic">(This includes all related objects)</p>
 		</ActionDialog>
 
 		<button

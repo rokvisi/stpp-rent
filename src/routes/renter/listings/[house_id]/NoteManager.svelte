@@ -81,13 +81,12 @@
 	</div>
 	<!-- <hr /> -->
 	<div class="space-y-2 rounded py-2">
-		<!-- <label class="inline-block shrink-0" for="newNoteInput">Post note:</label> -->
 		<input
 			id="newNoteInput"
 			type="text"
 			placeholder="Write new note..."
 			bind:value={newLocationNote}
-			class="w-full rounded border bg-stone-600 bg-opacity-50 px-2 py-2 shadow"
+			class="w-full rounded border bg-neutral-300 px-2 py-2 text-neutral-950 shadow placeholder:text-stone-800"
 		/>
 		<button
 			class="flex items-center gap-1 rounded border px-3 py-1.5 hover:bg-zinc-800 disabled:cursor-wait"

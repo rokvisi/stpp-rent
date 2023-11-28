@@ -126,7 +126,7 @@
 				name="name"
 				type="text"
 				placeholder="Room name..."
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.name}
 				{...$constraints.name}
 				aria-invalid={$errors.name ? 'true' : undefined}
@@ -166,8 +166,8 @@
 
 	<div class="mb-8 flex flex-wrap gap-4">
 		{#each area.images as image (image.id)}
-			<div class="group relative">
-				<img class="max-w-xs rounded border shadow" src={image.url} alt="" />
+			<div class="group relative flex max-w-sm">
+				<img class="aspect-[4/3] rounded border shadow" src={image.url} alt="" />
 				<button
 					class="absolute right-0 top-0 hidden rounded-full p-2 text-red-800 opacity-50 hover:opacity-100 group-hover:inline-block"
 					on:click={() => {
