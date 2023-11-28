@@ -17,7 +17,9 @@
 
 			<a href="/" class="text-mono inline-block text-lg uppercase tracking-wider">Rentee</a>
 		</div>
-		<span class="flex-2">{getPageTitle($page.url.pathname)}</span>
+		<span class="flex-2 mx-8 overflow-hidden overflow-ellipsis whitespace-nowrap"
+			>{getPageTitle($page.url.pathname)}</span
+		>
 		<div class="flex-1 space-x-4 text-right sm:space-x-2">
 			{#if $page.data.user}
 				<div class="inline-flex gap-2">

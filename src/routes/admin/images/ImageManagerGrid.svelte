@@ -39,7 +39,7 @@
 		<img class="w-full max-w-xl" src={selectedImage.url} alt="expanded image {selectedImage.id}" />
 	{/if}
 </ActionDialog>
-<div class="flex flex-wrap gap-10">
+<div class="flex flex-wrap gap-4 sm:gap-10">
 	{#each images as image (image.id)}
 		<div
 			class="group relative flex aspect-square w-28 items-start justify-end overflow-hidden rounded border shadow sm:w-36 xl:w-64"
@@ -62,7 +62,7 @@
 					Delete
 				</button>
 			</div>
-			<div class="absolute bottom-0 right-0 flex h-full w-full items-end justify-center sm:hidden">
+			<!-- <div class="absolute bottom-0 right-0 flex h-full w-full items-end justify-center sm:hidden">
 				<button
 					class="w-full rounded border bg-red-600 px-2 py-1 active:bg-red-400"
 					on:click={() => {
@@ -72,7 +72,7 @@
 				>
 					Delete
 				</button>
-			</div>
+			</div> -->
 		</div>
 	{/each}
 </div>
