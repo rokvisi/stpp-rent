@@ -11,6 +11,12 @@ export async function load() {
 	};
 }
 
+const roleToRedirectUrlMap: Record<string, string> = {
+	"rentee": "/rentee/houses",
+	"renter": "/renter/listings",
+	"admin": "/admin/images",
+}
+
 export const actions = {
 	login: async ({ fetch, request }) => {
 		const form = await superValidate(request, authSchemas.register);
@@ -27,7 +33,8 @@ export const actions = {
 			return message(form, resBody.message, { status: res.status as any });
 		}
 
-		throw redirect(302, '/');
+		const role = (await res.json()).role as ("rentee" | "renter" | 'admin');
+		throw redirect(302, roleToRedirectUrlMap[role] ?? "/");
 	},
 	register: async ({ fetch, request }) => {
 		const form = await superValidate(request, authSchemas.register);
@@ -47,7 +54,8 @@ export const actions = {
 			return message(form, resBody.message, { status: res.status as any });
 		}
 
-		throw redirect(302, '/');
+		const role = (await res.json()).role as ("rentee" | "renter" | 'admin');
+		throw redirect(302, roleToRedirectUrlMap[role] ?? "/");
 	},
 	logout: async ({ fetch }) => {
 		const res = await fetch('/api/v1/auth/logout', {

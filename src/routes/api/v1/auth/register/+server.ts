@@ -42,6 +42,9 @@ import { error, json } from '@sveltejs/kit';
  *                 message:
  *                   type: "string"
  *                   default: "Registration successful!"
+ *                 role:
+ *                   type: "string"
+ *                   example: "renter"
  *       400:
  *         description: "The data provided in the request body is invalid. Please check your registration information and try again."
  *       409:
@@ -86,6 +89,7 @@ export async function POST({ request, cookies }) {
 
 	//* 5. Return success response.
 	return json({
-		message: 'Registration successful!'
+		message: 'Registration successful!',
+		role
 	});
 }

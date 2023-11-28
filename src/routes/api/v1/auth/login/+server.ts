@@ -39,6 +39,9 @@ import { parseRequestBodyBySchema } from '$lib/server/api_helpers';
  *                 message:
  *                   type: "string"
  *                   default: "Log in successful!"
+ *                 role:
+ *                   type: "string"
+ *                   example: "rentee"
  *       400:
  *         description: "The request body is invalid. Message provided in the response body."
  *       401:
@@ -79,7 +82,8 @@ export async function POST({ request, cookies, locals }) {
 
 	//* 5. Return the success response.
 	return json({
-		message: 'Login successful!'
+		message: 'Login successful!',
+		role: userInfo.role
 	});
 }
 

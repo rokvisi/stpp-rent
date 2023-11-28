@@ -27,22 +27,22 @@
 	}
 </script>
 
-<div class="grid grid-cols-5 gap-4">
-	<ActionDialog
-		bind:showModal={showImageDeleteModal}
-		variant="negative"
-		confirmText="Delete"
-		confirmingText="Deleting..."
-		confirmAction={() => deleteImage()}
-	>
-		Are you sure you want to delete this image?
-		{#if selectedImage}
-			<img class="max-w-xl" src={selectedImage.url} alt="expanded image {selectedImage.id}" />
-		{/if}
-	</ActionDialog>
+<ActionDialog
+	bind:showModal={showImageDeleteModal}
+	variant="negative"
+	confirmText="Delete"
+	confirmingText="Deleting..."
+	confirmAction={() => deleteImage()}
+>
+	Are you sure you want to delete this image?
+	{#if selectedImage}
+		<img class="w-full max-w-xl" src={selectedImage.url} alt="expanded image {selectedImage.id}" />
+	{/if}
+</ActionDialog>
+<div class="flex flex-wrap gap-10">
 	{#each images as image (image.id)}
 		<div
-			class="group relative flex aspect-square w-64 items-start justify-end overflow-hidden rounded border shadow"
+			class="group relative flex aspect-square w-28 items-start justify-end overflow-hidden rounded border shadow sm:w-36 xl:w-64"
 		>
 			<img
 				class="absolute left-0 top-0 h-full w-full"
@@ -53,7 +53,18 @@
 				class="absolute left-0 top-0 hidden h-full w-full items-center justify-center group-hover:flex group-hover:bg-stone-700"
 			>
 				<button
-					class="rounded border bg-red-700 px-4 py-2 hover:bg-red-500"
+					class="rounded border bg-red-700 px-8 py-3 hover:bg-red-500"
+					on:click={() => {
+						selectedImage = image;
+						showImageDeleteModal();
+					}}
+				>
+					Delete
+				</button>
+			</div>
+			<div class="absolute bottom-0 right-0 flex h-full w-full items-end justify-center sm:hidden">
+				<button
+					class="w-full rounded border bg-red-600 px-2 py-1 active:bg-red-400"
 					on:click={() => {
 						selectedImage = image;
 						showImageDeleteModal();
