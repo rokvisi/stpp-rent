@@ -94,10 +94,12 @@
 					<TabPanel>
 						<div class="flex flex-wrap gap-3">
 							{#each commonArea.images as image (image.id)}
-								<div
-									class="group relative flex max-w-xs items-start justify-end overflow-hidden rounded border shadow"
-								>
-									<img class="aspect-[16/14]" src={image.url} alt="common area image{image.id}" />
+								<div class="flex w-[320px] overflow-hidden rounded border">
+									<img
+										class="aspect-[16/14]"
+										src={image.url}
+										alt="{commonArea.name} image {image.id}"
+									/>
 								</div>
 							{/each}
 						</div>
@@ -164,10 +166,12 @@
 						<!-- Images -->
 						<div class="mt-4 flex flex-wrap gap-3">
 							{#each room.images as image (image.id)}
-								<div
-									class="group relative flex max-w-xs items-start justify-end overflow-hidden rounded border shadow"
-								>
-									<img class="aspect-[16/14]" src={image.url} alt="room_image_{image.id}" />
+								<div class="flex w-[320px] overflow-hidden rounded border">
+									<img
+										class="aspect-[16/14]"
+										src={image.url}
+										alt="room {room.number} image {image.id}"
+									/>
 								</div>
 							{/each}
 						</div>
