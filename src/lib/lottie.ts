@@ -8,7 +8,7 @@ export function lottie(node: HTMLElement, animationData: any) {
         loop: false,
     });
 
-    animation.setSpeed(0.4);
+    animation.setSpeed(0.55);
 
     let direction: (-1 | 1) = 1;
     function onLoop() {
