@@ -1,25 +1,27 @@
 import { default as lot } from 'lottie-web';
 
 export function lottie(node: HTMLElement, animationData: any) {
-    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
     const animation = lot.loadAnimation({
         container: node,
         animationData,
-        autoplay: !reducedMotionQuery.matches
+        autoplay: true,
+        loop: false,
     });
 
-    function reducedMotionListener() {
-        if (reducedMotionQuery.matches) animation.pause();
-        else animation.play();
-    }
+    animation.setSpeed(0.4);
 
-    reducedMotionQuery.addEventListener('change', reducedMotionListener);
+    let direction: (-1 | 1) = 1;
+    function onLoop() {
+        animation.setDirection(direction);
+        animation.play()
+        direction *= -1;
+    }
+    animation.addEventListener('complete', onLoop)
 
     return {
         destroy: () => {
+            animation.removeEventListener('complete', onLoop)
             animation.destroy();
-            reducedMotionQuery.removeEventListener('change', reducedMotionListener);
         }
     };
 }

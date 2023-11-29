@@ -136,6 +136,7 @@
 				on:click={async () => {
 					$form.username = 'user1';
 					$form.password = 'labas123';
+					$form.role = 'renter';
 					formEl.action = '?/login';
 					quickBtnSubmitting = true;
 					await tick();
@@ -148,6 +149,7 @@
 				on:click={async () => {
 					$form.username = 'user2';
 					$form.password = 'labas123';
+					$form.role = 'renter';
 					formEl.action = '?/login';
 					quickBtnSubmitting = true;
 					await tick();
@@ -160,6 +162,7 @@
 				on:click={async () => {
 					$form.username = 'user3';
 					$form.password = 'labas123';
+					$form.role = 'renter';
 					formEl.action = '?/login';
 					quickBtnSubmitting = true;
 					await tick();
@@ -172,6 +175,7 @@
 				on:click={async () => {
 					$form.username = 'user4';
 					$form.password = 'labas123';
+					$form.role = 'renter';
 					formEl.action = '?/login';
 					quickBtnSubmitting = true;
 					await tick();

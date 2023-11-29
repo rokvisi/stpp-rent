@@ -5,7 +5,6 @@ import { superValidate, setError, message } from 'sveltekit-superforms/server';
 export async function load() {
 	return {
 		authForm: await superValidate(
-			{ username: 'user1', password: 'labas123', role: 'rentee' },
 			authSchemas.register
 		)
 	};
