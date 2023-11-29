@@ -37,7 +37,7 @@
 	Are you sure you want to end this contract?
 </ActionDialog>
 
-<div class="flex flex-col gap-2">
+<div class="flex max-w-4xl flex-col gap-2">
 	<PageHeading>My room contracts</PageHeading>
 	{#if pendingContracts.length === 0 && activeContracts.length === 0 && declinedContracts.length === 0 && completedContracts.length === 0}
 		<h2 class="text-xl">You have no contracts at this moment.</h2>

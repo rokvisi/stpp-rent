@@ -24,7 +24,7 @@
 				id="username"
 				name="username"
 				type="text"
-				class="block w-full rounded border px-1 py-1 text-black"
+				class="block w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.username}
 				{...$constraints.username}
 				aria-invalid={$errors.username ? 'true' : undefined}
@@ -38,7 +38,7 @@
 				id="password"
 				name="password"
 				type="password"
-				class="w-full rounded border px-1 py-1 text-black"
+				class="w-full rounded border bg-neutral-300 px-1 py-1 text-neutral-950 placeholder:text-stone-800"
 				bind:value={$form.password}
 				{...$constraints.password}
 				aria-invalid={$errors.password ? 'true' : undefined}
