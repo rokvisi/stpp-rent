@@ -94,7 +94,7 @@
 					<TabPanel>
 						<div class="flex flex-wrap gap-3">
 							{#each commonArea.images as image (image.id)}
-								<div class="flex w-[320px] overflow-hidden rounded border">
+								<div class="flex min-h-[278.250px] w-[320px] overflow-hidden rounded border">
 									<img
 										class="aspect-[16/14]"
 										src={image.url}
@@ -166,7 +166,7 @@
 						<!-- Images -->
 						<div class="mt-4 flex flex-wrap gap-3">
 							{#each room.images as image (image.id)}
-								<div class="flex w-[320px] overflow-hidden rounded border">
+								<div class="flex min-h-[278.250px] w-[320px] overflow-hidden rounded border">
 									<img
 										class="aspect-[16/14]"
 										src={image.url}

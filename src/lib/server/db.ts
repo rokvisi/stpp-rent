@@ -1,5 +1,5 @@
 // Local db connection.
-// import postgres from "postgres"
+// import postgres from 'postgres';
 // import { drizzle as drizzlePG } from 'drizzle-orm/postgres-js';
 // import * as schema from '$lib/database/schema';
 
@@ -11,5 +11,5 @@ import { sql } from '@vercel/postgres';
 import { drizzle as drizzleVercelPG } from 'drizzle-orm/vercel-postgres';
 import * as schema from '$lib/database/schema';
 
-const db = drizzleVercelPG(sql, { schema })
+const db = drizzleVercelPG(sql, { schema });
 export default db;
